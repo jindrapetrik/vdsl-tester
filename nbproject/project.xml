@@ -3,29 +3,14 @@
     <type>org.netbeans.modules.ant.freeform</type>
     <configuration>
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
-            <name>VDSLTester</name>
-        </general-data>
-        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
             <!-- Do not use Project Properties customizer when editing this file manually. -->
             <name>VDSLTester</name>
             <properties/>
             <folders>
                 <source-folder>
-                    <label>RouterStats</label>
-                    <location>.</location>
-                    <encoding>windows-1250</encoding>
-                </source-folder>
-                <source-folder>
                     <label>src</label>
                     <type>java</type>
                     <location>src</location>
-                    <encoding>windows-1250</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>test</label>
-                    <type>java</type>
-                    <location>test</location>
-                    <encoding>windows-1250</encoding>
                 </source-folder>
             </folders>
             <ide-actions>
@@ -48,19 +33,10 @@
                     <target>clean</target>
                     <target>build</target>
                 </action>
-                <action name="debug">
-                    <script>nbproject/ide-file-targets.xml</script>
-                    <target>debug-nb</target>
-                </action>
             </ide-actions>
             <export>
                 <type>folder</type>
-                <location>build/classes</location>
-                <build-target>build</build-target>
-            </export>
-            <export>
-                <type>folder</type>
-                <location>build/test</location>
+                <location>build</location>
                 <build-target>build</build-target>
             </export>
             <view>
@@ -68,10 +44,6 @@
                     <source-folder style="packages">
                         <label>src</label>
                         <location>src</location>
-                    </source-folder>
-                    <source-folder style="packages">
-                        <label>test</label>
-                        <location>test</location>
                     </source-folder>
                     <source-file>
                         <location>build.xml</location>
@@ -84,7 +56,6 @@
                     <ide-action name="javadoc"/>
                     <ide-action name="run"/>
                     <ide-action name="test"/>
-                    <ide-action name="debug"/>
                 </context-menu>
             </view>
             <subprojects/>
@@ -93,15 +64,7 @@
             <compilation-unit>
                 <package-root>src</package-root>
                 <classpath mode="compile">lib/eve.jar</classpath>
-                <built-to>build/classes</built-to>
-                <javadoc-built-to>dist/javadoc</javadoc-built-to>
-                <source-level>1.6</source-level>
-            </compilation-unit>
-            <compilation-unit>
-                <package-root>test</package-root>
-                <unit-tests/>
-                <classpath mode="compile">src;lib/eve.jar;lib/junit-4.5.jar</classpath>
-                <built-to>build/test</built-to>
+                <built-to>build</built-to>
                 <source-level>1.6</source-level>
             </compilation-unit>
         </java-data>
