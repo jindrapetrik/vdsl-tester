@@ -1,13 +1,12 @@
 package model.routers;
 
-import eve.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import model.Band;
 import model.ErrorMeasurement;
-import model.FakeRouter;
+import model.Router;
 import model.RouterMeasurement;
 import model.Utils;
 
@@ -15,10 +14,11 @@ import model.Utils;
  *
  * @author JPEXS
  */
-public class ComtrendRouter extends FakeRouter {
+public class ComtrendRouter extends Router {
 
-   public ComtrendRouter(){
-      super(File.makePath(File.getProgramDirectory(),"comtrend"));
+   public ComtrendRouter()
+   {
+      super("Comtrend");
    }
 
    @Override
@@ -79,6 +79,19 @@ public class ComtrendRouter extends FakeRouter {
          li=sendRequest("adsl info --pbParams");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
+            if(s.indexOf("Currently not in VDSL modulation")>-1)
+            {
+               //Assuming ADSL band plan
+               ret.USbandPlanInitial=new ArrayList<Band>();
+               ret.USbandPlanInitial.add(new Band(0,63));
+               ret.DSbandPlanInitial=new ArrayList<Band>();
+               ret.DSbandPlanInitial.add(new Band(64,511));
+
+               ret.USbandPlanFinal=new ArrayList<Band>();
+               ret.USbandPlanFinal.add(new Band(0,64));
+               ret.DSbandPlanFinal=new ArrayList<Band>();
+               ret.DSbandPlanFinal.add(new Band(64,511));
+            }
             if(s.indexOf("Status: ")==0){
                ret.status=s.substring(8).trim();
             }
@@ -183,7 +196,7 @@ public class ComtrendRouter extends FakeRouter {
          li=sendRequest("wan show interface");
          for(int i=0;i<li.size();i++){
             if(li.get(i).indexOf("Type    PortId  Priority        Enable QoS      Enable VLAN Mux")==0){
-               List<String> cols=Utils.getColumns(li.get(i+1));
+               List<String> cols=Utils.getColumns(li.get(i+1),1);
                ret.type=cols.get(0);
             }
          }

@@ -141,7 +141,7 @@ public class GraphPanel extends Panel {
             int x=(int)Math.round(i*imgWidth/(double)count);
             if(lastX!=x)
             {
-               deltax++;
+               deltax+=x-lastX;
             }
             if(((lastX!=x)&&(xcount>=MAXIMAGEWIDTH))||(i==count-1)){
                if(i==count-1){
@@ -163,7 +163,7 @@ public class GraphPanel extends Panel {
                      subGr.setColor(getCarrierColor(tone));
                      subGr.drawLine(p, imgHeight, p, imgHeight-ival);
                   }
-                  grphcs.drawImageData(subImg, new Rect(0,0,xcount,imgHeight), new Rect(x-deltax,0,deltax,imgHeight), 0);
+                  grphcs.drawImageData(subImg, new Rect(0,0,xcount,imgHeight), new Rect(1+x-deltax,0,deltax,imgHeight), 0);
                   deltax=1;
                }               
                xcount=0;               
