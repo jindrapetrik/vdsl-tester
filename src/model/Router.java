@@ -1,9 +1,17 @@
 package model;
 
-import java.net.*;
-import java.io.*;
+import controller.Arbiter;
+import eve.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Class for communication with router
@@ -17,11 +25,17 @@ public abstract class Router {
     protected boolean connected = false;
     private InputStream is;
     private OutputStream os;
-    private boolean debugMode = false;
+    private boolean debugMode = true;
     protected String connectionUserName = "admin";
     protected String connectionPassword = "admin";
+    public String name;
+    protected boolean loggedIn=false;
+    protected String fakeFile=null;
 
-    public static int socketTimeout=5000;
+    public void setFakeFile(String file){
+       this.fakeFile=file;
+    }
+
 
     public void setConnectionPassword(String connectionPassword) {
         this.connectionPassword = connectionPassword;
@@ -31,8 +45,16 @@ public abstract class Router {
         this.connectionUserName = connectionUserName;
     }
 
-    public Router() {
+    public Router(String name) {
+       this.name=name;
     }
+
+   @Override
+   public String toString() {
+      return name;
+   }
+
+
 
     public void setDebugMode(boolean debugMode) {
         this.debugMode = debugMode;
@@ -43,7 +65,7 @@ public abstract class Router {
     }
 
     public boolean isConnected() {
-        return connected;
+        return connected||(fakeFile!=null);
     }
 
     public int getPort() {
@@ -68,15 +90,17 @@ public abstract class Router {
      * @return True on success
      */
     public boolean connect() throws IOException {
-        if (connected) {
+        if (connected||(fakeFile!=null)) {
             return true;
-        }        
+        }
+        Arbiter.inform("connectingStart");
         sock = new Socket(InetAddress.getByName(adress), port);
         is = sock.getInputStream();
         os = sock.getOutputStream();
         connected = true;
         sock.setSoTimeout(100);
         readLine(); //telnet header
+        Arbiter.inform("connectingFinish");
         return true;
     }
 
@@ -84,7 +108,12 @@ public abstract class Router {
      * Log on the router
      */
     public void login() throws IOException {
+        if(loggedIn||(fakeFile!=null)){
+           return;
+        }
+
         connect();
+        Arbiter.inform("loggingInStart");
         sock.setSoTimeout(2000);
         String line = readAndStopAfterChar(':');
         readByte(); //space
@@ -98,9 +127,13 @@ public abstract class Router {
         if (line.toLowerCase().indexOf("password") > -1) {
             sendLine(connectionPassword);
             readLines();
+            loggedIn=true;
+            Arbiter.inform("loggingInFinish");
             return;
         }
-        sock.setSoTimeout(socketTimeout);
+        sock.setSoTimeout(model.Main.socketTimeout);
+        loggedIn=true;
+        Arbiter.inform("loggingInFinish");
     }
 
     /**
@@ -144,7 +177,8 @@ public abstract class Router {
             int prev = 0;
             String line = "";
             if (debugMode) {
-                ProgramLog.print("<\"");
+               ProgramLog.startIncoming();
+                //ProgramLog.print("<\"");
             }
             do {
                 i = is.read();
@@ -156,14 +190,17 @@ public abstract class Router {
                 }
                 if ((i == '\n') && (prev == '\r')) {
                     if (debugMode) {
-                        ProgramLog.println("\"");
+                        //ProgramLog.println("\"");
+                       //ProgramLog.println();
+                       ProgramLog.print("\n");
                     }
                     //ProgramLog.println("C");
                     return line;
                 }
                 if (checkRouterHeader(line)) {
                     if (debugMode) {
-                        ProgramLog.println(((char) i) + "\"");
+                        ProgramLog.print(((char) i)+"");
+                        //"\""
                     }
                    // ProgramLog.println("D");
                     return null;
@@ -180,7 +217,7 @@ public abstract class Router {
         } catch (SocketTimeoutException ex) {
         }
         if (debugMode) {
-            ProgramLog.println("\"");
+            //ProgramLog.println("\"");
         }
         return null;
     }
@@ -192,7 +229,9 @@ public abstract class Router {
      */
     public boolean sendLine(String line) throws IOException {
         if (debugMode) {
-            ProgramLog.println(">\"" + line + "\"");
+            //ProgramLog.println(">\"" + line + "\"");
+           ProgramLog.startOutcoming();
+           ProgramLog.println(line);
         }
         if (!connect()) {
             return false;
@@ -263,7 +302,8 @@ public abstract class Router {
                 }*/
                 if (i == c) {
                     if (debugMode) {
-                        ProgramLog.println("<" + line);
+                       ProgramLog.startIncoming();
+                        ProgramLog.print(line);
                     }
                     return line;
                 }
@@ -278,12 +318,19 @@ public abstract class Router {
      * Disconnects router
      */
     public void disconnect() {
+        loggedIn = false;
         connected = false;
         try {
-            is.close();
+            is.close();            
+        } catch (Exception ex) {
+        }
+        try {
             os.close();
+        } catch (Exception ex) {
+        }
+        try {
             sock.close();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
         }
     }
 
@@ -293,6 +340,10 @@ public abstract class Router {
      * @return Array of returned lines
      */
     public ArrayList<String> sendRequest(String command) throws IOException {
+        if(fakeFile!=null)
+        {
+           return sendFakeRequest(command, fakeFile);
+        }
         sendLine(command);
         readLine();
         ArrayList<String> ret = readLines();
@@ -322,7 +373,8 @@ public abstract class Router {
             int prev = 0;
             String line = "";
             if (debugMode) {
-                ProgramLog.print("<\"");
+                 ProgramLog.startIncoming();
+                //ProgramLog.print("<\"");
             }
             do {
                 i = is.read();
@@ -331,14 +383,15 @@ public abstract class Router {
                 }
                 if ((i == '\n') && (prev == '\r')) {
                     if (debugMode) {
-                        ProgramLog.println("\"");
+                        //ProgramLog.println("\"");
+                        ProgramLog.print("\n");
                     }
                     ret.add(line);
                     line = "";
                 }
                 if (checkRouterHeader(line)) {
                     if (debugMode) {
-                        ProgramLog.println(((char) i) + "\"");
+                        ProgramLog.print(((char) i) + ""); //\""
                     }
                     return ret;
                 }
@@ -346,14 +399,14 @@ public abstract class Router {
                 if (i == -1) {
                     return null;
                 }
-                if (debugMode) {
-                    ProgramLog.print("" + (char) i);
+                if ((i != '\n') && (i != '\r')) {                   
+                    ProgramLog.print("" + (char) i);                   
                 }
             } while (!end);
         } catch (SocketTimeoutException ex) {
         }
         if (debugMode) {
-            ProgramLog.println("\"");
+            //ProgramLog.println("\"");
         }
         return null;
     }
@@ -363,4 +416,51 @@ public abstract class Router {
     }
 
     public abstract RouterMeasurement doMeasure(HashSet<String> needs) throws IOException;
+
+    public ArrayList<String> sendFakeRequest(String command,String file) throws IOException {
+        ArrayList<String> ret=new ArrayList<String>();
+        BufferedReader br=new BufferedReader(new FileReader(file));
+        String s;
+        boolean buffer=false;
+        int routerHeaderLength=getRouterHeaderLength();
+        loopread:while((s=br.readLine())!=null){
+           boolean isheader=false;
+           if(routerHeaderLength==-1)
+           {
+                 for(int i=0;i<s.length();i++){
+                    if(checkRouterHeader(s.substring(0,i+1))){
+                       isheader=true;
+                       if(!buffer){
+                          if(command.equals(s.substring(i+1))){
+                              buffer=true;
+                              continue loopread;
+                          }
+                       }
+
+                    }
+                 }
+           }else{
+              if(s.length()>=routerHeaderLength)
+              {
+                 if(checkRouterHeader(s.substring(0,routerHeaderLength)))
+                 {
+                       isheader=true;
+                       if(!buffer){
+                          if(command.equals(s.substring(routerHeaderLength))){
+                              buffer=true;
+                              continue loopread;
+                          }
+                       }
+                 }
+              }
+           }
+           if(buffer&&(!isheader)){
+              ret.add(s);
+           }
+           if(buffer&&(isheader)){
+              buffer=false;
+           }
+        }
+        return ret;
+   }
 }

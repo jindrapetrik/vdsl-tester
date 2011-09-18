@@ -1,9 +1,7 @@
 package view;
 
-import eve.fx.AlignmentConstants;
 import eve.fx.Color;
 import eve.fx.Font;
-import eve.io.File;
 import eve.ui.Button;
 import eve.ui.CardPanel;
 import eve.ui.CellConstants;
@@ -31,6 +29,8 @@ public class MainForm extends Form{
    GraphFrame graphQLNTab;
    GraphFrame graphHLogTab;
 
+   public StatusDisplay statusDisplay;
+
    Color tabButtonColor=new Color(0xff,0xcc,0x00);
    Color tabSelectedButtonColor=new Color(0xcc,0xff,0xff);
 
@@ -41,15 +41,15 @@ public class MainForm extends Form{
 
    public static final int ROW_HEIGHT=30;
 
-   ValueField modemValue=new ValueField(150,ROW_HEIGHT);
-   ValueField modeValue=new ValueField(150,ROW_HEIGHT);
-   ValueField profileValue=new ValueField(90,ROW_HEIGHT);
-   ValueField typeValue=new ValueField(90,ROW_HEIGHT);
+   ValueField modemValue=new ValueField(160,ROW_HEIGHT);
+   ValueField modeValue=new ValueField(170,ROW_HEIGHT);
+   ValueField profileValue=new ValueField(110,ROW_HEIGHT);
+   ValueField typeValue=new ValueField(110,ROW_HEIGHT);
    ValueField wanIPValue=new ValueField(160,ROW_HEIGHT);
-   ValueField SWVersionValue=new ValueField(360,ROW_HEIGHT);
-   ValueField upTimeValue=new ValueField(240,ROW_HEIGHT);
-   ValueField linkTimeValue=new ValueField(240,ROW_HEIGHT);
-   ValueField reconnectValue=new ValueField(50,ROW_HEIGHT);
+   ValueField SWVersionValue=new ValueField(420,ROW_HEIGHT);
+   ValueField upTimeValue=new ValueField(260,ROW_HEIGHT);
+   ValueField linkTimeValue=new ValueField(260,ROW_HEIGHT);
+   ValueField reconnectValue=new ValueField(70,ROW_HEIGHT);
 
    ValueField USmaxRateValue=new ValueField(110,ROW_HEIGHT);
    ValueField DSmaxRateValue=new ValueField(110,ROW_HEIGHT);
@@ -393,6 +393,10 @@ public class MainForm extends Form{
       }
    }
 
+   public String getSelectedCard()
+   {
+         return lastSelectedCard;
+   }
    public void selectCard(String cardName){
       cardPanel.select(cardName);
       if(lastSelectedCard!=null){
@@ -410,17 +414,17 @@ public class MainForm extends Form{
       }
       setFont(new Font("Arial",0,20));
       int formWidth=750;
-      int formHeight=450;
+      int formHeight=425;
 
       setFixedSize(formWidth,formHeight);
 
       infoTab=new Frame();
       Frame infoTabPanel1=new Frame();
-      infoTabPanel1.addNext(new Label("Modem"), 0, Frame.CENTER);
-      infoTabPanel1.addNext(new Label("Mode"), 0, Frame.CENTER);
-      infoTabPanel1.addNext(new Label("Profile"), 0, Frame.CENTER);
-      infoTabPanel1.addNext(new Label("Type"), 0, Frame.CENTER);
-      infoTabPanel1.addLast(new Label("WAN IP"), 0, Frame.CENTER);
+      infoTabPanel1.addNext(new Label(model.Main.view.language.modem), 0, Frame.CENTER);
+      infoTabPanel1.addNext(new Label(model.Main.view.language.mode), 0, Frame.CENTER);
+      infoTabPanel1.addNext(new Label(model.Main.view.language.profile), 0, Frame.CENTER);
+      infoTabPanel1.addNext(new Label(model.Main.view.language.type), 0, Frame.CENTER);
+      infoTabPanel1.addLast(new Label(model.Main.view.language.WANIP), 0, Frame.CENTER);
 
       infoTabPanel1.addNext(modemValue, 0, Frame.CENTER);
       infoTabPanel1.addNext(modeValue, 0, Frame.CENTER);
@@ -430,29 +434,29 @@ public class MainForm extends Form{
       infoTab.addLast(infoTabPanel1, 0, Frame.CENTER);
 
       Frame infoTabPanel2=new Frame();
-      infoTabPanel2.addNext(new Label("SWVersion"), 0, Frame.CENTER);
+      infoTabPanel2.addNext(new Label(model.Main.view.language.swVersion), 0, Frame.CENTER);
       infoTabPanel2.addNext(SWVersionValue, 0, Frame.LEFT);
-      infoTabPanel2.addNext(new Label("Reconnect"), 0, Frame.CENTER);
+      infoTabPanel2.addNext(new Label(model.Main.view.language.reconnect), 0, Frame.CENTER);
       infoTabPanel2.addLast(reconnectValue, 0, Frame.CENTER);
       infoTab.addLast(infoTabPanel2, 0, Frame.CENTER);
 
       Frame infoTabPanel3=new Frame();
-      infoTabPanel3.addNext(new Label("Up time"), 0, Frame.CENTER);
+      infoTabPanel3.addNext(new Label(model.Main.view.language.upTime), 0, Frame.CENTER);
       infoTabPanel3.addNext(upTimeValue, 0, Frame.CENTER);
-      infoTabPanel3.addNext(new Label("Link time"), 0, Frame.CENTER);
+      infoTabPanel3.addNext(new Label(model.Main.view.language.linkTime), 0, Frame.CENTER);
       infoTabPanel3.addLast(linkTimeValue, 0, Frame.CENTER);
       infoTab.addLast(infoTabPanel3, 0, Frame.CENTER);
 
       Frame infoTabPanel4=new Frame();
-      infoTabPanel4.addNext(new Label("Rate"), 0, Frame.CENTER);
-      infoTabPanel4.addNext(new Label("Max"), 0, Frame.CENTER);
-      infoTabPanel4.addNext(new Label("Actual"), 0, Frame.CENTER);
-      infoTabPanel4.addNext(new Label("Power"), 0, Frame.CENTER);
-      infoTabPanel4.addNext(new Label("SNR"), 0, Frame.CENTER);
-      infoTabPanel4.addNext(new Label("INP"), 0, Frame.CENTER);
-      infoTabPanel4.addLast(new Label("Delay"), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.rate), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.max), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.actual), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.power), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.snr), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.inp), 0, Frame.CENTER);
+      infoTabPanel4.addLast(new Label(model.Main.view.language.delay), 0, Frame.CENTER);
 
-      infoTabPanel4.addNext(new Label("US"), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.US), 0, Frame.CENTER);
       infoTabPanel4.addNext(USmaxRateValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(USactRateValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(USPowerValue, 0, Frame.CENTER);
@@ -460,7 +464,7 @@ public class MainForm extends Form{
       infoTabPanel4.addNext(USINPValue, 0, Frame.CENTER);
       infoTabPanel4.addLast(USDelayValue, 0, Frame.CENTER);
 
-      infoTabPanel4.addNext(new Label("DS"), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.DS), 0, Frame.CENTER);
       infoTabPanel4.addNext(DSmaxRateValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(DSactRateValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(DSPowerValue, 0, Frame.CENTER);
@@ -471,8 +475,8 @@ public class MainForm extends Form{
       infoTab.addLast(infoTabPanel4, 0, Frame.CENTER);
 
       Panel panSep=new Panel();
-      panSep.setFixedSize(10,30);
-      infoTab.addLast(panSep,0,Frame.CENTER);
+      /*panSep.setFixedSize(10,30);
+      infoTab.addLast(panSep,0,Frame.CENTER);*/
       
       Frame infoTabPanel5=new Frame();
       infoTabPanel5.addNext(new Panel(), 0, Frame.CENTER);
@@ -484,7 +488,7 @@ public class MainForm extends Form{
       infoTabPanel5.addNext(new Label("D3"), 0, Frame.CENTER);
       infoTabPanel5.addLast(new Label("U3"), 0, Frame.CENTER);
 
-      infoTabPanel5.addNext(new Label("LATN"), 0, Frame.CENTER);
+      infoTabPanel5.addNext(new Label(model.Main.view.language.latn), 0, Frame.CENTER);
       infoTabPanel5.addNext(U0LatnValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D1LatnValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(U1LatnValue, 0, Frame.CENTER);
@@ -492,7 +496,7 @@ public class MainForm extends Form{
       infoTabPanel5.addNext(U2LatnValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D3LatnValue, 0, Frame.CENTER);
       infoTabPanel5.addLast(U3LatnValue, 0, Frame.CENTER);
-      infoTabPanel5.addNext(new Label("SATN"), 0, Frame.CENTER);
+      infoTabPanel5.addNext(new Label(model.Main.view.language.satn), 0, Frame.CENTER);
       infoTabPanel5.addNext(U0SatnValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D1SatnValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(U1SatnValue, 0, Frame.CENTER);
@@ -500,7 +504,7 @@ public class MainForm extends Form{
       infoTabPanel5.addNext(U2SatnValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D3SatnValue, 0, Frame.CENTER);
       infoTabPanel5.addLast(U3SatnValue, 0, Frame.CENTER);
-      infoTabPanel5.addNext(new Label("Margin"), 0, Frame.CENTER);
+      infoTabPanel5.addNext(new Label(model.Main.view.language.margin), 0, Frame.CENTER);
       infoTabPanel5.addNext(U0MarginValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D1MarginValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(U1MarginValue, 0, Frame.CENTER);
@@ -508,7 +512,7 @@ public class MainForm extends Form{
       infoTabPanel5.addNext(U2MarginValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D3MarginValue, 0, Frame.CENTER);
       infoTabPanel5.addLast(U3MarginValue, 0, Frame.CENTER);
-      infoTabPanel5.addNext(new Label("Power"), 0, Frame.CENTER);
+      infoTabPanel5.addNext(new Label(model.Main.view.language.power), 0, Frame.CENTER);
       infoTabPanel5.addNext(U0PowerValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D1PowerValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(U1PowerValue, 0, Frame.CENTER);
@@ -527,7 +531,7 @@ public class MainForm extends Form{
       Frame errorsTabPanelX=new Frame();
       Frame errorsTabPanel0=new Frame();
       Label errorLabel;
-      errorLabel=new Label("SUMA ERRORS Link Time");      
+      errorLabel=new Label(model.Main.view.language.sumaErrors+" "+model.Main.view.language.errorsLinkTime);
       errorLabel.anchor=CellConstants.NORTHEAST;
       errorLabel.setFixedSize(ERROR_LABEL_WIDTH,ROW_HEIGHT);
       errorsTabPanel0.addNext(errorLabel,  0, Frame.RIGHT);
@@ -535,16 +539,16 @@ public class MainForm extends Form{
       errorsTabPanelX.addLast(errorsTabPanel0,0,Frame.CENTER);
       Frame errorsTabPanel1=new Frame();
       errorsTabPanel1.addNext(new Panel(),0,Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("ES"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("UAS"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("CRC"), 0, Frame.CENTER);
-      errorsTabPanel1.addLast(new Label("FEC"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("US"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.ES), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.UAS), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.CRC), 0, Frame.CENTER);
+      errorsTabPanel1.addLast(new Label(model.Main.view.language.FEC), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.US), 0, Frame.CENTER);
       errorsTabPanel1.addNext(USESLinkTimeValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USUASLinkTimeValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USCRCLinkTimeValue, 0, Frame.CENTER);
       errorsTabPanel1.addLast(USFECLinkTimeValue, 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("DS"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.DS), 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSESLinkTimeValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSUASLinkTimeValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSCRCLinkTimeValue, 0, Frame.CENTER);
@@ -555,12 +559,12 @@ public class MainForm extends Form{
 
 
       panSep=new Panel();
-      panSep.setFixedSize(10,30);
+      panSep.setFixedSize(10,5);
       errorsDayTab.addLast(panSep,0,Frame.CENTER);
 
       errorsTabPanelX=new Frame();
       errorsTabPanel0=new Frame();
-      errorLabel=new Label("SUMA ERRORS Latest 1 Day Time");
+      errorLabel=new Label(model.Main.view.language.sumaErrors+" "+model.Main.view.language.latest1DayTime);
       errorLabel.anchor=CellConstants.NORTHEAST;
       errorLabel.setFixedSize(ERROR_LABEL_WIDTH,ROW_HEIGHT);
       errorsTabPanel0.addNext(errorLabel, 0, Frame.RIGHT);
@@ -568,16 +572,16 @@ public class MainForm extends Form{
       errorsTabPanelX.addLast(errorsTabPanel0,0,Frame.CENTER);
       errorsTabPanel1=new Frame();
       errorsTabPanel1.addNext(new Panel(),0,Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("ES"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("UAS"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("CRC"), 0, Frame.CENTER);
-      errorsTabPanel1.addLast(new Label("FEC"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("US"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.ES), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.UAS), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.CRC), 0, Frame.CENTER);
+      errorsTabPanel1.addLast(new Label(model.Main.view.language.FEC), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.US), 0, Frame.CENTER);
       errorsTabPanel1.addNext(USESLatDayValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USUASLatDayValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USCRCLatDayValue, 0, Frame.CENTER);
       errorsTabPanel1.addLast(USFECLatDayValue, 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("DS"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.DS), 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSESLatDayValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSUASLatDayValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSCRCLatDayValue, 0, Frame.CENTER);
@@ -588,12 +592,12 @@ public class MainForm extends Form{
 
 
       panSep=new Panel();
-      panSep.setFixedSize(10,30);
+      panSep.setFixedSize(10,5);
       errorsDayTab.addLast(panSep,0,Frame.CENTER);
 
       errorsTabPanelX=new Frame();
       errorsTabPanel0=new Frame();
-      errorLabel=new Label("SUMA ERRORS Previous 1 Day Time");
+      errorLabel=new Label(model.Main.view.language.sumaErrors+" "+model.Main.view.language.previous1DayTime);
       errorLabel.anchor=CellConstants.NORTHEAST;
       errorLabel.setFixedSize(ERROR_LABEL_WIDTH,ROW_HEIGHT);
       errorsTabPanel0.addNext(errorLabel, 0, Frame.RIGHT);
@@ -601,16 +605,16 @@ public class MainForm extends Form{
       errorsTabPanelX.addLast(errorsTabPanel0,0,Frame.CENTER);
       errorsTabPanel1=new Frame();
       errorsTabPanel1.addNext(new Panel(),0,Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("ES"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("UAS"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("CRC"), 0, Frame.CENTER);
-      errorsTabPanel1.addLast(new Label("FEC"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("US"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.ES), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.UAS), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.CRC), 0, Frame.CENTER);
+      errorsTabPanel1.addLast(new Label(model.Main.view.language.FEC), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.US), 0, Frame.CENTER);
       errorsTabPanel1.addNext(USESPrevDayValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USUASPrevDayValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USCRCPrevDayValue, 0, Frame.CENTER);
       errorsTabPanel1.addLast(USFECPrevDayValue, 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("DS"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.DS), 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSESPrevDayValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSUASPrevDayValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSCRCPrevDayValue, 0, Frame.CENTER);
@@ -623,7 +627,7 @@ public class MainForm extends Form{
       errors15minTab=new Frame();
       errorsTabPanelX=new Frame();
       errorsTabPanel0=new Frame();
-      errorLabel=new Label("SUMA ERRORS Link Time");
+      errorLabel=new Label(model.Main.view.language.sumaErrors+" "+model.Main.view.language.errorsLinkTime);
       errorLabel.anchor=CellConstants.NORTHEAST;
       errorLabel.setFixedSize(ERROR_LABEL_WIDTH,ROW_HEIGHT);
       errorsTabPanel0.addNext(errorLabel, 0, Frame.RIGHT);
@@ -631,16 +635,16 @@ public class MainForm extends Form{
       errorsTabPanelX.addLast(errorsTabPanel0,0,Frame.CENTER);
       errorsTabPanel1=new Frame();
       errorsTabPanel1.addNext(new Panel(),0,Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("ES"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("UAS"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("CRC"), 0, Frame.CENTER);
-      errorsTabPanel1.addLast(new Label("FEC"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("US"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.ES), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.UAS), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.CRC), 0, Frame.CENTER);
+      errorsTabPanel1.addLast(new Label(model.Main.view.language.FEC), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.US), 0, Frame.CENTER);
       errorsTabPanel1.addNext(USESLinkTime2Value, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USUASLinkTime2Value, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USCRCLinkTime2Value, 0, Frame.CENTER);
       errorsTabPanel1.addLast(USFECLinkTime2Value, 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("DS"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.DS), 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSESLinkTime2Value, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSUASLinkTime2Value, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSCRCLinkTime2Value, 0, Frame.CENTER);
@@ -651,12 +655,12 @@ public class MainForm extends Form{
 
 
       panSep=new Panel();
-      panSep.setFixedSize(10,30);
+      panSep.setFixedSize(10,5);
       errors15minTab.addLast(panSep,0,Frame.CENTER);
 
       errorsTabPanelX=new Frame();
       errorsTabPanel0=new Frame();
-      errorLabel=new Label("SUMA ERRORS Latest 15 minutes Time");
+      errorLabel=new Label(model.Main.view.language.sumaErrors+" "+model.Main.view.language.latest15MinutesTime);
       errorLabel.anchor=CellConstants.NORTHEAST;
       errorLabel.setFixedSize(ERROR_LABEL_WIDTH,ROW_HEIGHT);
       errorsTabPanel0.addNext(errorLabel, 0, Frame.RIGHT);
@@ -664,16 +668,16 @@ public class MainForm extends Form{
       errorsTabPanelX.addLast(errorsTabPanel0,0,Frame.CENTER);
       errorsTabPanel1=new Frame();
       errorsTabPanel1.addNext(new Panel(),0,Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("ES"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("UAS"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("CRC"), 0, Frame.CENTER);
-      errorsTabPanel1.addLast(new Label("FEC"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("US"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.ES), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.UAS), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.CRC), 0, Frame.CENTER);
+      errorsTabPanel1.addLast(new Label(model.Main.view.language.FEC), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.US), 0, Frame.CENTER);
       errorsTabPanel1.addNext(USESLat15MinValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USUASLat15MinValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USCRCLat15MinValue, 0, Frame.CENTER);
       errorsTabPanel1.addLast(USFECLat15MinValue, 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("DS"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.DS), 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSESLat15MinValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSUASLat15MinValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSCRCLat15MinValue, 0, Frame.CENTER);
@@ -684,12 +688,12 @@ public class MainForm extends Form{
 
 
       panSep=new Panel();
-      panSep.setFixedSize(10,30);
+      panSep.setFixedSize(10,5);
       errors15minTab.addLast(panSep,0,Frame.CENTER);
 
       errorsTabPanelX=new Frame();
       errorsTabPanel0=new Frame();
-      errorLabel=new Label("SUMA ERRORS Previous 15 Minutes Time");
+      errorLabel=new Label(model.Main.view.language.sumaErrors+" "+model.Main.view.language.previous15MinutesTime);
       errorLabel.anchor=CellConstants.NORTHEAST;
       errorLabel.setFixedSize(ERROR_LABEL_WIDTH,ROW_HEIGHT);
       errorsTabPanel0.addNext(errorLabel, 0, Frame.RIGHT);
@@ -697,16 +701,16 @@ public class MainForm extends Form{
       errorsTabPanelX.addLast(errorsTabPanel0,0,Frame.CENTER);
       errorsTabPanel1=new Frame();
       errorsTabPanel1.addNext(new Panel(),0,Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("ES"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("UAS"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("CRC"), 0, Frame.CENTER);
-      errorsTabPanel1.addLast(new Label("FEC"), 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("US"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.ES), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.UAS), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.CRC), 0, Frame.CENTER);
+      errorsTabPanel1.addLast(new Label(model.Main.view.language.FEC), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.US), 0, Frame.CENTER);
       errorsTabPanel1.addNext(USESPrev15MinValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USUASPrev15MinValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(USCRCPrev15MinValue, 0, Frame.CENTER);
       errorsTabPanel1.addLast(USFECPrev15MinValue, 0, Frame.CENTER);
-      errorsTabPanel1.addNext(new Label("DS"), 0, Frame.CENTER);
+      errorsTabPanel1.addNext(new Label(model.Main.view.language.DS), 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSESPrev15MinValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSUASPrev15MinValue, 0, Frame.CENTER);
       errorsTabPanel1.addNext(DSCRCPrev15MinValue, 0, Frame.CENTER);
@@ -715,13 +719,13 @@ public class MainForm extends Form{
 
       errors15minTab.addLast(errorsTabPanelX, 0, Frame.CENTER);
 
-      graphBitTab=new GraphFrame("Bits",null,15,0);
+      graphBitTab=new GraphFrame(model.Main.view.language.bits,null,15,0);
 
-      graphSNRTab=new GraphFrame("SNR","dB",65,0); //95,-32);
+      graphSNRTab=new GraphFrame(model.Main.view.language.snr,"dB",65,0); //95,-32);
 
-      graphQLNTab=new GraphFrame("QLN","dBm/Hz",-100,-160);// -23,-150);
+      graphQLNTab=new GraphFrame(model.Main.view.language.qln,"dBm/Hz",-100,-160);// -23,-150);
 
-      graphHLogTab=new GraphFrame("Hlog","dB",6,-96);
+      graphHLogTab=new GraphFrame(model.Main.view.language.hlog,"dB",6,-96);
 
       cardPanel=new CardPanel();
       cardPanel.addCard(infoTab, "INFO","INFO");
@@ -732,15 +736,24 @@ public class MainForm extends Form{
       cardPanel.addCard(graphQLNTab, "GRAPHQLN","GRAPHQLN");
       cardPanel.addCard(graphHLogTab, "GRAPHHLOG","GRAPHHLOG");
       //cardPanel.setFixedSize(480, 600);
-      addLast(cardPanel);
+      
       
       //cardNames=new String[]{"INFO","PARAM","1DAY","15MIN","GRAPHBIT","GRAPHSNR","GRAPHQLN"};
       cardNames=new String[]{"INFO","1DAY","15MIN","GRAPHBIT","GRAPHSNR","GRAPHQLN","GRAPHHLOG"};
+      String cardLangs[]=new String[]{
+         model.Main.view.language.menuInfo,
+         model.Main.view.language.menu1Day,
+         model.Main.view.language.menu15Min,
+         model.Main.view.language.menuGraphBit,
+         model.Main.view.language.menuGraphSNR,
+         model.Main.view.language.menuGraphQLN,
+         model.Main.view.language.menuGraphHlog};
+
       cardButtons=new HashMap<String,Button>();
 
       for(int i=0;i<cardNames.length;i++){
-         Button cardButton = new Button(cardNames[i]);
-         cardButton.action="TABSWITCH";
+         Button cardButton = new Button(cardLangs[i]);
+         cardButton.action="TABSWITCH_"+cardNames[i];
          cardButton.backGround=tabButtonColor;
          cardButton.addListener(Main.controller.mainEventListener);
          //cardButton.setFixedSize(80, ROW_HEIGHT);
@@ -753,16 +766,32 @@ public class MainForm extends Form{
       tabSwitchPanel.addNext(panSep2);
       tabSwitchPanel.addNext(statusValue);
 
-      Button xButton=new Button("X");
-      xButton.setAction("CLOSE");
-      xButton.addListener(Main.controller.mainEventListener);
-      tabSwitchPanel.addLast(xButton);
+      
+      //tabSwitchPanel.addLast(xButton,0,Frame.RIGHT);
       selectCard("INFO");
      // tabSwitchPanel.addLast(new Panel());
       //tabSwitchPanel.setFixedSize(formWidth, 25);
-      addLast(tabSwitchPanel,0,Frame.BOTTOM);
+      addLast(tabSwitchPanel,0,Frame.TOP);
+
+      addLast(cardPanel);
+
+      statusDisplay=new StatusDisplay();
+
+      Button closeButton=new Button(model.Main.view.language.exit);
+      closeButton.setAction("CLOSE");
+      closeButton.addListener(Main.controller.mainEventListener);
+
+      Button switchButton=new Button(model.Main.view.language.modemIPChange);
+      switchButton.setAction("CHANGEMODEM");
+      switchButton.addListener(Main.controller.mainEventListener);
+      
+      addNext(statusDisplay);      
+      addNext(switchButton);
+      addNext(closeButton);
+      addLast(new Panel());
       resizable=false;
-      title="VDSL Measuring";
+      title=model.Main.view.language.mainTitle;
+
    }
 
    @Override

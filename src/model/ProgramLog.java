@@ -14,6 +14,32 @@ public class ProgramLog {
     private static boolean souborOtevren=false;
     private static FileOutputStream logStream=null;
 
+    public static final boolean SHOWDIRECTIONS=false;
+    
+    public static final int MODE_INCOMING=1;
+    public static final int MODE_OUTCOMING=2;
+    public static int mode=0;
+
+    public static final int logMode=MODE_INCOMING;
+
+
+    public static void startIncoming()
+    {
+       if(SHOWDIRECTIONS){
+            print("<");
+       }
+       mode=MODE_INCOMING;
+    }
+
+    public static void startOutcoming()
+    {
+       if(SHOWDIRECTIONS)
+       {
+            print(">");
+       }
+       mode=MODE_OUTCOMING;
+    }
+
     private static boolean kontrolaSouboru(){
         if(!souborOtevren){
             Calendar cal = Calendar.getInstance();
@@ -38,10 +64,8 @@ public class ProgramLog {
         if(!Main.isDebugMode()) return;
         if(kontrolaSouboru()){
             System.out.println(s);
-            try {
-                logStream.write((s + "\r\n").getBytes());
-            } catch (IOException ex) {
-            }
+            print(s);
+            print("\r\n");
         }
     }
 
@@ -51,6 +75,7 @@ public class ProgramLog {
 
     public static void print(String s){
         if(!Main.isDebugMode()) return;
+        if((logMode&mode)!=mode) return;
         if(kontrolaSouboru()){
             System.out.print(s);
             try {
