@@ -8,9 +8,12 @@ import eve.ui.Frame;
 import eve.ui.Input;
 import eve.ui.Label;
 import eve.ui.List;
+import eve.ui.Menu;
+import eve.ui.MenuItem;
 import eve.ui.MessageBox;
 import eve.ui.Panel;
 import eve.ui.PasswordInput;
+import eve.ui.SoftKeyBar;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import model.Router;
@@ -22,7 +25,7 @@ import model.Router;
 public class ConnectionForm extends Form {
 
     private Label ipLabel = new Label(model.Main.view.language.modemIPAddress);
-    private Input ipInput = new Input();
+    public Input ipInput = new Input();
     private Label portLabel = new Label(model.Main.view.language.telnetPort);
     private Input portInput = new Input();
     private Frame buttonFrame = new Frame();
@@ -62,7 +65,7 @@ public class ConnectionForm extends Form {
          {
                fullScreenOnPDA();
          }
-        setFont(new Font("",0,(int)(12*model.Main.view.zoom)));
+        setFont(new Font("Sans serif",0,(int)(12*model.Main.view.zoom)));
         addNext(ipLabel);
         addLast(ipInput);
 
@@ -79,7 +82,7 @@ public class ConnectionForm extends Form {
         routersList.setFixedSize((int)(100*model.Main.view.zoom), (int)(4*20*model.Main.view.zoom));
         addLast(routersList);
         Panel psep=new Panel();
-        psep.setFixedSize((int)(100*model.Main.view.zoom), (int)(20*model.Main.view.zoom));
+        psep.setFixedSize((int)(50*model.Main.view.zoom), (int)(20*model.Main.view.zoom));
         addLast(psep);
         addLast(advancedFrame);
         advancedFrame.setBorder(Frame.EDGE_RAISED, 2);
@@ -89,17 +92,33 @@ public class ConnectionForm extends Form {
         cancelButton.setAction("CANCEL");
         cancelButton.addListener(model.Main.controller.connectionEventListener);
         advancedButton.setAction("ADVANCED");
-        advancedButton.addListener(model.Main.controller.connectionEventListener);
-        buttonFrame.addNext(okButton);
-        buttonFrame.addNext(advancedButton);
-        buttonFrame.addLast(cancelButton);
+        advancedButton.addListener(model.Main.controller.connectionEventListener);        
         //routersList.setFixedSize(100, 75);
         for (int i = 0; i < model.Main.routers.size(); i++) {
             routersList.addItem(model.Main.routers.get(i));
         }
         routersList.select(lastSelectedModem);
-        title = model.Main.view.language.parameters;
+        title = model.Main.view.language.parameters+' '+model.Main.version;
+
+        if (SoftKeyBar.getType() != SoftKeyBar.TYPE_NONE){
+           SoftKeyBar skb=new SoftKeyBar();
+           skb.setKey(1, okButton);
+           Menu actionsMenu=new Menu();
+           MenuItem advancedMenuItem=actionsMenu.addItem(model.Main.view.language.advancedConfig);
+           advancedMenuItem.action="ADVANCED";
+           actionsMenu.addListener(model.Main.controller.connectionEventListener);
+           MenuItem cancelMenuItem=actionsMenu.addItem(model.Main.view.language.cancel);
+           cancelMenuItem.action="CANCEL";
+
+           skb.setKey(SoftKeyBar.numberOfKeys(),model.Main.view.language.actions, actionsMenu);
+           setSoftKeyBarFor(null, skb);
+        }else{
+           buttonFrame.addNext(okButton);
+           buttonFrame.addNext(advancedButton);
+           buttonFrame.addLast(cancelButton);
+        }
         addLast(buttonFrame);
+
     }
 
     public Router getRouter() {

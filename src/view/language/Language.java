@@ -63,8 +63,8 @@ public class Language {
     public String upTime="Up time";
     public String linkTime="Link time";
     public String rate="Rate";
-    public String max="Max";
-    public String actual="Actual";
+    public String maxRate="Max Rate";
+    public String actualRate="Actual Rate";
     public String power="Power";
     public String snr="SNR";
     public String inp="INP";
@@ -82,6 +82,9 @@ public class Language {
     public String CRC="CRC";
     public String UAS="UAS";
     public String ES="ES";
+    public String hlog300="Hlog 300kHz";
+    public String hlog1000="Hlog 1MHz";
+    public String actions="Actions";
 
     public String bits="Bits";
     public String tone="Tone";

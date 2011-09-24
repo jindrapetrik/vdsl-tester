@@ -19,8 +19,8 @@ public class CzechNoDiaLanguage extends Language {
        upTime = "Up time";
        linkTime = "Link time";
        rate = "Rychlost";
-       max = "Max";
-       actual = "Aktualni";
+       maxRate = "Max Rychlost";
+       actualRate = "Aktualni Rychlost";
        power = "Vykon";
        snr = "SNR";
        inp = "INP";
@@ -38,6 +38,7 @@ public class CzechNoDiaLanguage extends Language {
        CRC = "CRC";
        UAS = "UAS";
        ES = "ES";
+       actions = "Akce";
 
        bits = "Bity";
        tone = "Ton";

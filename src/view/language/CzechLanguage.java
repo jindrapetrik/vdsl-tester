@@ -19,8 +19,8 @@ public class CzechLanguage extends Language {
        upTime = "Up time";
        linkTime = "Link time";
        rate = "Rychlost";
-       max = "Max";
-       actual = "Aktuální";
+       maxRate = "Max Rychlost";
+       actualRate = "Aktuální Rychlost";
        power = "Výkon";
        snr = "SNR";
        inp = "INP";
@@ -38,6 +38,7 @@ public class CzechLanguage extends Language {
        CRC = "CRC";
        UAS = "UAS";
        ES = "ES";
+       actions = "Akce";
 
        bits = "Bity";
        tone = "Tón";

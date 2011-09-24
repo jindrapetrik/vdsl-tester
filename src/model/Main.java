@@ -2,6 +2,7 @@ package model;
 
 import controller.Arbiter;
 import controller.Controller;
+import controller.MyListener;
 import eve.io.File;
 import eve.ui.Application;
 import eve.ui.MessageBox;
@@ -34,6 +35,7 @@ public class Main {
    public static int socketTimeout=5000;
    public static int delay=5000;
    public static String fakeFile=null;
+   public static String version="beta 1";
 
    static{
       routers.add(new ComtrendRouter());
@@ -108,7 +110,16 @@ public class Main {
        Application.startApplication(args);
        //router=new ComtrendRouter();
        loadConfig();
-       controller=new Controller();       
+       if(isDebugMode())
+       {
+             Arbiter.listen("exception", new MyListener() {
+                  @Override
+                  public void eventHandler(String event, Object data) {
+                    ProgramLog.printException((Exception)data);
+                  }
+               });
+       }
+       controller=new Controller();
        view=new View();
        view.initDisplay();
        

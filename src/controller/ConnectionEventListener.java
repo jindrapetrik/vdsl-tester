@@ -2,7 +2,10 @@ package controller;
 
 import eve.sys.Event;
 import eve.sys.EventListener;
+import eve.ui.MenuItem;
+import eve.ui.MessageBox;
 import eve.ui.event.ControlEvent;
+import eve.ui.event.MenuEvent;
 
 /**
  *
@@ -11,9 +14,16 @@ import eve.ui.event.ControlEvent;
 public class ConnectionEventListener implements EventListener {
 
     public void onEvent(Event ev) {
-        if (ev.type == ControlEvent.PRESSED) {
+       String action="nothing";       
+       if (ev.type == ControlEvent.PRESSED) {
             ControlEvent cev = (ControlEvent) ev;
-            if (cev.action.equals("OK")) {
+            action=cev.action;
+       }
+       if (ev.type == MenuEvent.SELECTED) {
+            MenuEvent mev = (MenuEvent) ev;
+            action=((MenuItem)mev.selectedItem).action;
+       }
+       if (action.equals("OK")) {
                 if (!model.Main.view.areParametersValid()) {
                     model.Main.view.displayMessageInvalid();
                 } else {
@@ -30,16 +40,15 @@ public class ConnectionEventListener implements EventListener {
                     model.Main.view.hideConfig();
                 }
             }
-            if (cev.action.equals("ADVANCED")) {
+            if (action.equals("ADVANCED")) {
                model.Main.view.switchAdvancedConfig();
             }
-            if (cev.action.equals("CANCEL")) {
+            if (action.equals("CANCEL")) {
                model.Main.view.hideConfig();
                 if(model.Main.router==null){
                     model.Main.exit();
                 }
             }
-
-        }
+        
     }
 }
