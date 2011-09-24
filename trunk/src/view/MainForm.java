@@ -71,37 +71,37 @@ public class MainForm extends Form{
 
    ValueField U0LatnValue=new ValueField(75,ROW_HEIGHT);
    ValueField U0SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U0MarginValue=new ValueField(75,ROW_HEIGHT);
+   ValueField U0SNRValue=new ValueField(75,ROW_HEIGHT);
    ValueField U0PowerValue=new ValueField(75,ROW_HEIGHT);
 
    ValueField D1LatnValue=new ValueField(75,ROW_HEIGHT);
    ValueField D1SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D1MarginValue=new ValueField(75,ROW_HEIGHT);
+   ValueField D1SNRValue=new ValueField(75,ROW_HEIGHT);
    ValueField D1PowerValue=new ValueField(75,ROW_HEIGHT);
 
    ValueField U1LatnValue=new ValueField(75,ROW_HEIGHT);
    ValueField U1SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U1MarginValue=new ValueField(75,ROW_HEIGHT);
+   ValueField U1SNRValue=new ValueField(75,ROW_HEIGHT);
    ValueField U1PowerValue=new ValueField(75,ROW_HEIGHT);
 
    ValueField D2LatnValue=new ValueField(75,ROW_HEIGHT);
    ValueField D2SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D2MarginValue=new ValueField(75,ROW_HEIGHT);
+   ValueField D2SNRValue=new ValueField(75,ROW_HEIGHT);
    ValueField D2PowerValue=new ValueField(75,ROW_HEIGHT);
 
    ValueField U2LatnValue=new ValueField(75,ROW_HEIGHT);
    ValueField U2SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U2MarginValue=new ValueField(75,ROW_HEIGHT);
+   ValueField U2SNRValue=new ValueField(75,ROW_HEIGHT);
    ValueField U2PowerValue=new ValueField(75,ROW_HEIGHT);
 
    ValueField D3LatnValue=new ValueField(75,ROW_HEIGHT);
    ValueField D3SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D3MarginValue=new ValueField(75,ROW_HEIGHT);
+   ValueField D3SNRValue=new ValueField(75,ROW_HEIGHT);
    ValueField D3PowerValue=new ValueField(75,ROW_HEIGHT);
 
    ValueField U3LatnValue=new ValueField(75,ROW_HEIGHT);
    ValueField U3SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U3MarginValue=new ValueField(75,ROW_HEIGHT);
+   ValueField U3SNRValue=new ValueField(75,ROW_HEIGHT);
    ValueField U3PowerValue=new ValueField(75,ROW_HEIGHT);
 
    ValueField LinkTimeDetailValue=new ValueField(300,ROW_HEIGHT);
@@ -280,37 +280,37 @@ public class MainForm extends Form{
          U0LatnValue.setValue(rm.U0_latn);
          U0SatnValue.setValue(rm.U0_satn);
          U0PowerValue.setValue(rm.U0_power);
-         U0MarginValue.setValue(rm.U0_margin);
+         U0SNRValue.setValue(rm.U0_snr);
 
          D1LatnValue.setValue(rm.D1_latn);
          D1SatnValue.setValue(rm.D1_satn);
          D1PowerValue.setValue(rm.D1_power);
-         D1MarginValue.setValue(rm.D1_margin);
+         D1SNRValue.setValue(rm.D1_snr);
 
          U1LatnValue.setValue(rm.U1_latn);
          U1SatnValue.setValue(rm.U1_satn);
          U1PowerValue.setValue(rm.U1_power);
-         U1MarginValue.setValue(rm.U1_margin);
+         U1SNRValue.setValue(rm.U1_snr);
 
          D2LatnValue.setValue(rm.D2_latn);
          D2SatnValue.setValue(rm.D2_satn);
          D2PowerValue.setValue(rm.D2_power);
-         D2MarginValue.setValue(rm.D2_margin);
+         D2SNRValue.setValue(rm.D2_snr);
 
          U2LatnValue.setValue(rm.U2_latn);
          U2SatnValue.setValue(rm.U2_satn);
          U2PowerValue.setValue(rm.U2_power);
-         U2MarginValue.setValue(rm.U2_margin);
+         U2SNRValue.setValue(rm.U2_snr);
 
          D3LatnValue.setValue(rm.D3_latn);
          D3SatnValue.setValue(rm.D3_satn);
          D3PowerValue.setValue(rm.D3_power);
-         D3MarginValue.setValue(rm.D3_margin);
+         D3SNRValue.setValue(rm.D3_snr);
 
          U3LatnValue.setValue(rm.U3_latn);
          U3SatnValue.setValue(rm.U3_satn);
          U3PowerValue.setValue(rm.U3_power);
-         U3MarginValue.setValue(rm.U3_margin);
+         U3SNRValue.setValue(rm.U3_snr);
       }
       if(cardName.equals("15MIN")){
          ErrorMeasurement em;
@@ -544,13 +544,13 @@ public class MainForm extends Form{
       infoTabPanel5.addNext(D3SatnValue, 0, Frame.CENTER);
       infoTabPanel5.addLast(U3SatnValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(new Label(model.Main.view.language.snr), 0, Frame.CENTER);
-      infoTabPanel5.addNext(U0MarginValue, 0, Frame.CENTER);
-      infoTabPanel5.addNext(D1MarginValue, 0, Frame.CENTER);
-      infoTabPanel5.addNext(U1MarginValue, 0, Frame.CENTER);
-      infoTabPanel5.addNext(D2MarginValue, 0, Frame.CENTER);
-      infoTabPanel5.addNext(U2MarginValue, 0, Frame.CENTER);
-      infoTabPanel5.addNext(D3MarginValue, 0, Frame.CENTER);
-      infoTabPanel5.addLast(U3MarginValue, 0, Frame.CENTER);
+      infoTabPanel5.addNext(U0SNRValue, 0, Frame.CENTER);
+      infoTabPanel5.addNext(D1SNRValue, 0, Frame.CENTER);
+      infoTabPanel5.addNext(U1SNRValue, 0, Frame.CENTER);
+      infoTabPanel5.addNext(D2SNRValue, 0, Frame.CENTER);
+      infoTabPanel5.addNext(U2SNRValue, 0, Frame.CENTER);
+      infoTabPanel5.addNext(D3SNRValue, 0, Frame.CENTER);
+      infoTabPanel5.addLast(U3SNRValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(new Label(model.Main.view.language.power), 0, Frame.CENTER);
       infoTabPanel5.addNext(U0PowerValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D1PowerValue, 0, Frame.CENTER);

@@ -165,13 +165,13 @@ public class ComtrendRouter extends Router {
             if(s.indexOf("        SNR Margin(dB):")==0){
                List<String> cols=Utils.getColumns(s.substring(23));
                if(cols.size()==7){
-                  ret.U0_margin=cols.get(0);
-                  ret.U1_margin=cols.get(1);
-                  ret.U2_margin=cols.get(2);
-                  ret.U3_margin=cols.get(3);
-                  ret.D1_margin=cols.get(4);
-                  ret.D2_margin=cols.get(5);
-                  ret.D3_margin=cols.get(6);
+                  ret.U0_snr=cols.get(0);
+                  ret.U1_snr=cols.get(1);
+                  ret.U2_snr=cols.get(2);
+                  ret.U3_snr=cols.get(3);
+                  ret.D1_snr=cols.get(4);
+                  ret.D2_snr=cols.get(5);
+                  ret.D3_snr=cols.get(6);
                }
             }
             if(s.indexOf("         TX Power(dBm):")==0){
