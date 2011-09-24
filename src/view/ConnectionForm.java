@@ -64,7 +64,7 @@ public class ConnectionForm extends Form {
        if(eve.sys.Device.isMobile())
          {
                fullScreenOnPDA();
-         }
+         }             
         setFont(new Font("Sans serif",0,(int)(12*model.Main.view.zoom)));
         addNext(ipLabel);
         addLast(ipInput);

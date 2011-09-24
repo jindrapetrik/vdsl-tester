@@ -35,37 +35,37 @@ public class RouterMeasurement {
 
    public String U0_latn;
    public String U0_satn;
-   public String U0_margin;
+   public String U0_snr;
    public String U0_power;
 
    public String D1_latn;
    public String D1_satn;
-   public String D1_margin;
+   public String D1_snr;
    public String D1_power;
 
    public String U1_latn;
    public String U1_satn;
-   public String U1_margin;
+   public String U1_snr;
    public String U1_power;
 
    public String D2_latn;
    public String D2_satn;
-   public String D2_margin;
+   public String D2_snr;
    public String D2_power;
 
    public String U2_latn;
    public String U2_satn;
-   public String U2_margin;
+   public String U2_snr;
    public String U2_power;
 
    public String D3_latn;
    public String D3_satn;
-   public String D3_margin;
+   public String D3_snr;
    public String D3_power;
 
    public String U3_latn;
    public String U3_satn;
-   public String U3_margin;
+   public String U3_snr;
    public String U3_power;
 
    public ErrorMeasurement errorsAll;
@@ -114,37 +114,37 @@ public class RouterMeasurement {
               +"U0: \r\n"
               +" - LATN: "+Utils.nvl(U0_latn)+"\r\n"
               +" - SATN: "+Utils.nvl(U0_satn)+"\r\n"
-              +" - Margin: "+Utils.nvl(U0_margin)+"\r\n"
+              +" - Margin: "+Utils.nvl(U0_snr)+"\r\n"
               +" - Power: "+Utils.nvl(U0_power)+"\r\n"
               +"D1: \r\n"
               +" - LATN: "+Utils.nvl(D1_latn)+"\r\n"
               +" - SATN: "+Utils.nvl(D1_satn)+"\r\n"
-              +" - Margin: "+Utils.nvl(D1_margin)+"\r\n"
+              +" - Margin: "+Utils.nvl(D1_snr)+"\r\n"
               +" - Power: "+Utils.nvl(D1_power)+"\r\n"
               +"U1: \r\n"
               +" - LATN: "+Utils.nvl(U1_latn)+"\r\n"
               +" - SATN: "+Utils.nvl(U1_satn)+"\r\n"
-              +" - Margin: "+Utils.nvl(U1_margin)+"\r\n"
+              +" - Margin: "+Utils.nvl(U1_snr)+"\r\n"
               +" - Power: "+Utils.nvl(U1_power)+"\r\n"
               +"D2: \r\n"
               +" - LATN: "+Utils.nvl(D2_latn)+"\r\n"
               +" - SATN: "+Utils.nvl(D2_satn)+"\r\n"
-              +" - Margin: "+Utils.nvl(D2_margin)+"\r\n"
+              +" - Margin: "+Utils.nvl(D2_snr)+"\r\n"
               +" - Power: "+Utils.nvl(D2_power)+"\r\n"
               +"U2: \r\n"
               +" - LATN: "+Utils.nvl(U2_latn)+"\r\n"
               +" - SATN: "+Utils.nvl(U2_satn)+"\r\n"
-              +" - Margin: "+Utils.nvl(U2_margin)+"\r\n"
+              +" - Margin: "+Utils.nvl(U2_snr)+"\r\n"
               +" - Power: "+Utils.nvl(U2_power)+"\r\n"
               +"D3: \r\n"
               +" - LATN: "+Utils.nvl(D3_latn)+"\r\n"
               +" - SATN: "+Utils.nvl(D3_satn)+"\r\n"
-              +" - Margin: "+Utils.nvl(D3_margin)+"\r\n"
+              +" - Margin: "+Utils.nvl(D3_snr)+"\r\n"
               +" - Power: "+Utils.nvl(D3_power)+"\r\n"
               +"U3: \r\n"
               +" - LATN: "+Utils.nvl(U3_latn)+"\r\n"
               +" - SATN: "+Utils.nvl(U3_satn)+"\r\n"
-              +" - Margin: "+Utils.nvl(U3_margin)+"\r\n"
+              +" - Margin: "+Utils.nvl(U3_snr)+"\r\n"
               +" - Power: "+Utils.nvl(U3_power)+"\r\n"
               +"Errors All:"+Utils.nvl(errorsAll)+"\r\n"
               +"Errors Latest 15 min:"+Utils.nvl(errorsLatest15Min)+"\r\n"

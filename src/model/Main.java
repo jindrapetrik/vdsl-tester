@@ -5,7 +5,6 @@ import controller.Controller;
 import controller.MyListener;
 import eve.io.File;
 import eve.ui.Application;
-import eve.ui.MessageBox;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,8 +12,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.routers.ComtrendRouter;
 import view.View;
 
