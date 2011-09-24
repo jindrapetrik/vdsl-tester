@@ -191,18 +191,6 @@ public class ComtrendRouter extends Router {
       }
 
       if((needs==null)
-        ||needs.contains("type")
-        ){
-         li=sendRequest("wan show interface");
-         for(int i=0;i<li.size();i++){
-            if(li.get(i).indexOf("Type    PortId  Priority        Enable QoS      Enable VLAN Mux")==0){
-               List<String> cols=Utils.getColumns(li.get(i+1),1);
-               ret.type=cols.get(0);
-            }
-         }
-      }
-
-      if((needs==null)
         ||needs.contains("wanIP")
         ){
          li=sendRequest("route show");
@@ -230,10 +218,15 @@ public class ComtrendRouter extends Router {
         ||needs.contains("CRC")
         ||needs.contains("HEC")
         ||needs.contains("linkTime")
+        ||needs.contains("type")
         ){
          li=sendRequest("adsl info --stats");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
+            if(s.indexOf("TPS-TC:")==0)
+            {
+               ret.type=s.substring(7).trim();
+            }
             if(s.indexOf("Mode:")==0){
                ret.mode=s.substring(5).trim();
             }

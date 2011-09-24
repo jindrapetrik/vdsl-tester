@@ -57,7 +57,7 @@ public class StatusDisplay extends Frame{
                     break;
             }
             g.fillRect(0, 0, getWidth(), getHeight());            
-            Font mujfont=new Font("",0,15);
+            Font mujfont=new Font("Sans serif",0,15);
             g.setFont(mujfont);
             FontMetrics fm=g.getFontMetrics(mujfont);
             switch(type){

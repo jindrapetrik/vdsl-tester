@@ -9,6 +9,7 @@ import eve.ui.Form;
 import eve.ui.Frame;
 import eve.ui.Label;
 import eve.ui.Panel;
+import eve.ui.SoftKeyBar;
 import model.Main;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,6 +51,9 @@ public class MainForm extends Form{
    ValueField upTimeValue=new ValueField(260,ROW_HEIGHT);
    ValueField linkTimeValue=new ValueField(260,ROW_HEIGHT);
    ValueField reconnectValue=new ValueField(70,ROW_HEIGHT);
+
+   ValueField hlog300Value=new ValueField(70,ROW_HEIGHT);
+   ValueField hlog1000Value=new ValueField(70,ROW_HEIGHT);
 
    ValueField USmaxRateValue=new ValueField(110,ROW_HEIGHT);
    ValueField DSmaxRateValue=new ValueField(110,ROW_HEIGHT);
@@ -194,6 +198,7 @@ public class MainForm extends Form{
          ret.add("snr");
          ret.add("inp");
          ret.add("delay");
+         ret.add("graphHlog"); //hlog300,hlog1000
 
          //params
          ret.add("band_latn");
@@ -251,6 +256,25 @@ public class MainForm extends Form{
          USSNRValue.setValue(rm.US_snr);
          USINPValue.setValue(rm.US_inp);
          USDelayValue.setValue(rm.US_delay);
+
+         if(rm.graphHlog!=null)
+         {
+            if(rm.graphHlog.size()>72)
+            {
+               hlog300Value.setValue(rm.graphHlog.get(72));
+            }else{
+               hlog300Value.setValue(null);
+            }
+            if(rm.graphHlog.size()>232)
+            {
+               hlog1000Value.setValue(rm.graphHlog.get(232));
+            }else{
+               hlog1000Value.setValue(null);
+            }
+         }else{
+            hlog300Value.setValue(null);
+            hlog1000Value.setValue(null);
+         }
 
          //params
          U0LatnValue.setValue(rm.U0_latn);
@@ -447,34 +471,49 @@ public class MainForm extends Form{
       infoTabPanel3.addLast(linkTimeValue, 0, Frame.CENTER);
       infoTab.addLast(infoTabPanel3, 0, Frame.CENTER);
 
+      Panel panSep=new Panel();
       Frame infoTabPanel4=new Frame();
-      infoTabPanel4.addNext(new Label(model.Main.view.language.rate), 0, Frame.CENTER);
-      infoTabPanel4.addNext(new Label(model.Main.view.language.max), 0, Frame.CENTER);
-      infoTabPanel4.addNext(new Label(model.Main.view.language.actual), 0, Frame.CENTER);
-      infoTabPanel4.addNext(new Label(model.Main.view.language.power), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Panel(), 0, Frame.CENTER);      
+      infoTabPanel4.addNext(new Label(model.Main.view.language.actualRate), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.maxRate), 0, Frame.CENTER);
       infoTabPanel4.addNext(new Label(model.Main.view.language.snr), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.delay), 0, Frame.CENTER);
       infoTabPanel4.addNext(new Label(model.Main.view.language.inp), 0, Frame.CENTER);
-      infoTabPanel4.addLast(new Label(model.Main.view.language.delay), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.power), 0, Frame.CENTER);
+      infoTabPanel4.addLast(new Panel(),0,Frame.CENTER);
+      
 
-      infoTabPanel4.addNext(new Label(model.Main.view.language.US), 0, Frame.CENTER);
-      infoTabPanel4.addNext(USmaxRateValue, 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.US), 0, Frame.CENTER);      
       infoTabPanel4.addNext(USactRateValue, 0, Frame.CENTER);
-      infoTabPanel4.addNext(USPowerValue, 0, Frame.CENTER);
-      infoTabPanel4.addNext(USSNRValue, 0, Frame.CENTER);
+      infoTabPanel4.addNext(USmaxRateValue, 0, Frame.CENTER);
+      infoTabPanel4.addNext(USSNRValue, 0, Frame.CENTER);      
+      infoTabPanel4.addNext(USDelayValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(USINPValue, 0, Frame.CENTER);
-      infoTabPanel4.addLast(USDelayValue, 0, Frame.CENTER);
+      infoTabPanel4.addNext(USPowerValue, 0, Frame.CENTER);
+
+      panSep=new Panel();
+      panSep.setFixedSize(10, 5);
+      infoTabPanel4.addNext(panSep, 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.hlog300), 0, Frame.CENTER);
+      infoTabPanel4.addLast(hlog300Value, 0, Frame.CENTER);
 
       infoTabPanel4.addNext(new Label(model.Main.view.language.DS), 0, Frame.CENTER);
-      infoTabPanel4.addNext(DSmaxRateValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(DSactRateValue, 0, Frame.CENTER);
-      infoTabPanel4.addNext(DSPowerValue, 0, Frame.CENTER);
+      infoTabPanel4.addNext(DSmaxRateValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(DSSNRValue, 0, Frame.CENTER);
+      infoTabPanel4.addNext(DSDelayValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(DSINPValue, 0, Frame.CENTER);
-      infoTabPanel4.addLast(DSDelayValue, 0, Frame.CENTER);
-      
+      infoTabPanel4.addNext(DSPowerValue, 0, Frame.CENTER);
+
+      panSep=new Panel();
+      panSep.setFixedSize(10, 5);
+      infoTabPanel4.addNext(panSep, 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.hlog1000), 0, Frame.CENTER);
+      infoTabPanel4.addLast(hlog1000Value, 0, Frame.CENTER);
+            
       infoTab.addLast(infoTabPanel4, 0, Frame.CENTER);
 
-      Panel panSep=new Panel();
+      
       /*panSep.setFixedSize(10,30);
       infoTab.addLast(panSep,0,Frame.CENTER);*/
       
@@ -504,7 +543,7 @@ public class MainForm extends Form{
       infoTabPanel5.addNext(U2SatnValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D3SatnValue, 0, Frame.CENTER);
       infoTabPanel5.addLast(U3SatnValue, 0, Frame.CENTER);
-      infoTabPanel5.addNext(new Label(model.Main.view.language.margin), 0, Frame.CENTER);
+      infoTabPanel5.addNext(new Label(model.Main.view.language.snr), 0, Frame.CENTER);
       infoTabPanel5.addNext(U0MarginValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D1MarginValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(U1MarginValue, 0, Frame.CENTER);
@@ -785,12 +824,20 @@ public class MainForm extends Form{
       switchButton.setAction("CHANGEMODEM");
       switchButton.addListener(Main.controller.mainEventListener);
       
-      addNext(statusDisplay);      
-      addNext(switchButton);
-      addNext(closeButton);
+      addNext(statusDisplay);
+
+      if (SoftKeyBar.getType() != SoftKeyBar.TYPE_NONE){
+           SoftKeyBar skb=new SoftKeyBar();
+           skb.setKey(1,switchButton);
+           skb.setKey(2,closeButton);
+           setSoftKeyBarFor(null, skb);
+      }else{
+         addNext(switchButton);
+         addNext(closeButton);
+      }
       addLast(new Panel());
       resizable=false;
-      title=model.Main.view.language.mainTitle;
+      title=model.Main.view.language.mainTitle+' '+model.Main.version;
 
    }
 

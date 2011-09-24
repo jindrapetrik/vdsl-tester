@@ -3,6 +3,7 @@ package model;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Calendar;
 
 /**
@@ -83,6 +84,15 @@ public class ProgramLog {
             } catch (IOException ex) {
             }
         }
+    }
+
+    public static void printException(Exception ex)
+    {
+         if(!Main.isDebugMode()) return;
+         if(kontrolaSouboru()){
+               ex.printStackTrace();
+               ex.printStackTrace(new PrintStream(logStream));
+         }
     }
     public static void close(){
         try {

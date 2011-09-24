@@ -2,11 +2,11 @@ package controller;
 
 import eve.sys.Event;
 import eve.sys.EventListener;
-import eve.ui.Button;
+import eve.ui.MenuItem;
 import eve.ui.event.ControlEvent;
+import eve.ui.event.MenuEvent;
 import model.Main;
 import view.StatusDisplay;
-import view.View;
 
 /**
  *
@@ -16,26 +16,33 @@ public class MainEventListener implements EventListener,MyListener{
 
    @Override
    public void onEvent(Event event) {
+      String action="NOTHING";
       if(event.type==ControlEvent.PRESSED)
       {
           ControlEvent cevent=(ControlEvent)event;
-          if(cevent.action.startsWith("TABSWITCH_")){
-             String cname=cevent.action.substring(10);
-             if(cevent.target instanceof Button){
-                if(!Main.view.mainForm.getSelectedCard().equals(cname))
-                {
-                     Main.view.setCard(cname);
-                     Main.updateValues(cname);
-                }
-             }
-          }
-          if(cevent.action.equals("CLOSE")){
-             Main.exit();
-          }
-          if(cevent.action.equals("CHANGEMODEM")){
-               model.Main.view.showConfig();
-          }
+          action=cevent.action;
       }
+      if (event.type == MenuEvent.SELECTED) {
+            MenuEvent mev = (MenuEvent) event;
+            action=((MenuItem)mev.selectedItem).action;
+      }
+
+
+       if(action.startsWith("TABSWITCH_")){
+          String cname=action.substring(10);
+          if(!Main.view.mainForm.getSelectedCard().equals(cname))
+          {
+               Main.view.setCard(cname);
+               Main.updateValues(cname);
+          }
+       }
+       if(action.equals("CLOSE")){
+          Main.exit();
+       }
+       if(action.equals("CHANGEMODEM")){
+            model.Main.view.showConfig();
+       }
+      
    }
 
    @Override
@@ -49,7 +56,6 @@ public class MainEventListener implements EventListener,MyListener{
          status.setStatusTextAndType(model.Main.view.language.connecting,StatusDisplay.TYPE_YELLOW);
       }
       if(event.equals("exception")){
-         ((Exception)data).printStackTrace();
          status.setStatusTextAndType(model.Main.view.language.cannotConnect,StatusDisplay.TYPE_RED);
       }
       if(event.equals("loggingInStart")){
