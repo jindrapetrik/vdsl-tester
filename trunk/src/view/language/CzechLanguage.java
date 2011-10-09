@@ -63,6 +63,8 @@ public class CzechLanguage extends Language {
 
        US = "US";
        DS = "DS";
+       freq="Frekv";
+       subcarrier="Subnosná";
 
        mainTitle = "Mìøení VDSL";
 

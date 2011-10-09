@@ -63,7 +63,8 @@ public class CzechNoDiaLanguage extends Language {
 
        US = "US";
        DS = "DS";
-
+       freq="Frekv";
+       subcarrier="Subnosna";
        mainTitle = "Mereni VDSL";
 
        //Connect dialog
