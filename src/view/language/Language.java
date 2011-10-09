@@ -82,8 +82,6 @@ public class Language {
     public String CRC="CRC";
     public String UAS="UAS";
     public String ES="ES";
-    public String hlog300="Hlog 300kHz";
-    public String hlog1000="Hlog 1MHz";
     public String actions="Actions";
 
     public String bits="Bits";
@@ -97,6 +95,7 @@ public class Language {
     public String menuGraphSNR="GRAPHSNR";
     public String menuGraphQLN="GRAPHQLN";
     public String menuGraphHlog="GRAPHHLOG";
+    public String menuHlog="HLOG";
     public String connecting="Connecting...";
     public String measuring="Measuring...";
     public String loggingIn="Logging in...";
@@ -109,6 +108,9 @@ public class Language {
 
     public String US="US";
     public String DS="DS";
+    
+    public String freq="Freq";
+    public String subcarrier="Subcarrier";
 
     public String mainTitle="VDSL Measuring";
 

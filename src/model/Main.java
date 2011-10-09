@@ -32,7 +32,7 @@ public class Main {
    public static int socketTimeout=5000;
    public static int delay=5000;
    public static String fakeFile=null;
-   public static String version="beta 1";
+   public static String version="beta 2";
 
    static{
       routers.add(new ComtrendRouter());

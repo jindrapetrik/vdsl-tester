@@ -25,6 +25,7 @@ public class MainForm extends Form{
    Panel infoTab;
    Panel errorsDayTab;
    Panel errors15minTab;
+   Frame hLogTab;
    GraphFrame graphBitTab;
    GraphFrame graphSNRTab;
    GraphFrame graphQLNTab;
@@ -50,10 +51,7 @@ public class MainForm extends Form{
    ValueField SWVersionValue=new ValueField(420,ROW_HEIGHT);
    ValueField upTimeValue=new ValueField(260,ROW_HEIGHT);
    ValueField linkTimeValue=new ValueField(260,ROW_HEIGHT);
-   ValueField reconnectValue=new ValueField(70,ROW_HEIGHT);
-
-   ValueField hlog300Value=new ValueField(70,ROW_HEIGHT);
-   ValueField hlog1000Value=new ValueField(70,ROW_HEIGHT);
+   ValueField reconnectValue=new ValueField(70,ROW_HEIGHT);   
 
    ValueField USmaxRateValue=new ValueField(110,ROW_HEIGHT);
    ValueField DSmaxRateValue=new ValueField(110,ROW_HEIGHT);
@@ -173,7 +171,15 @@ public class MainForm extends Form{
    ValueField DSUASLat15MinValue=new ValueField(100,ROW_HEIGHT);
    ValueField DSCRCLat15MinValue=new ValueField(100,ROW_HEIGHT);
    ValueField DSFECLat15MinValue=new ValueField(100,ROW_HEIGHT);
-
+   
+   ValueField hlog72Value=new ValueField(100,ROW_HEIGHT);
+   ValueField hlog232Value=new ValueField(100,ROW_HEIGHT);
+   ValueField hlog812Value=new ValueField(100,ROW_HEIGHT);
+   ValueField hlog1275Value=new ValueField(100,ROW_HEIGHT);
+   ValueField hlog1855Value=new ValueField(100,ROW_HEIGHT);
+   ValueField hlog2899Value=new ValueField(100,ROW_HEIGHT);
+   ValueField hlog3710Value=new ValueField(100,ROW_HEIGHT);
+   
    StatusValueField statusValue=new StatusValueField(150,ROW_HEIGHT);
 
    public HashSet<String> getNeededFields(String cardName){
@@ -182,6 +188,10 @@ public class MainForm extends Form{
          return ret;
       }
       ret.add("status");
+      
+      if(cardName.equals("HLOG")){
+         ret.add("graphHlog");
+      }
       if(cardName.equals("INFO")){
          ret.add("name");
          ret.add("mode");
@@ -198,7 +208,6 @@ public class MainForm extends Form{
          ret.add("snr");
          ret.add("inp");
          ret.add("delay");
-         ret.add("graphHlog"); //hlog300,hlog1000
 
          //params
          ret.add("band_latn");
@@ -255,26 +264,7 @@ public class MainForm extends Form{
          USPowerValue.setValue(rm.US_power);
          USSNRValue.setValue(rm.US_snr);
          USINPValue.setValue(rm.US_inp);
-         USDelayValue.setValue(rm.US_delay);
-
-         if(rm.graphHlog!=null)
-         {
-            if(rm.graphHlog.size()>72)
-            {
-               hlog300Value.setValue(rm.graphHlog.get(72));
-            }else{
-               hlog300Value.setValue(null);
-            }
-            if(rm.graphHlog.size()>232)
-            {
-               hlog1000Value.setValue(rm.graphHlog.get(232));
-            }else{
-               hlog1000Value.setValue(null);
-            }
-         }else{
-            hlog300Value.setValue(null);
-            hlog1000Value.setValue(null);
-         }
+         USDelayValue.setValue(rm.US_delay);         
 
          //params
          U0LatnValue.setValue(rm.U0_latn);
@@ -400,6 +390,61 @@ public class MainForm extends Form{
          
       }
 
+      if(cardName.equals("HLOG")){
+         if(rm.graphHlog!=null)
+         {
+            if(rm.graphHlog.size()>72)
+            {
+               hlog72Value.setValue(rm.graphHlog.get(72));
+            }else{
+               hlog72Value.setValue(null);
+            }
+            if(rm.graphHlog.size()>232)
+            {
+               hlog232Value.setValue(rm.graphHlog.get(232));
+            }else{
+               hlog232Value.setValue(null);
+            }
+            if(rm.graphHlog.size()>812)
+            {
+               hlog812Value.setValue(rm.graphHlog.get(812));
+            }else{
+               hlog812Value.setValue(null);
+            }
+            if(rm.graphHlog.size()>1275)
+            {
+               hlog1275Value.setValue(rm.graphHlog.get(1275));
+            }else{
+               hlog1275Value.setValue(null);
+            }
+            if(rm.graphHlog.size()>1855)
+            {
+               hlog1855Value.setValue(rm.graphHlog.get(1855));
+            }else{
+               hlog1855Value.setValue(null);
+            }
+            if(rm.graphHlog.size()>2899)
+            {
+               hlog2899Value.setValue(rm.graphHlog.get(2899));
+            }else{
+               hlog2899Value.setValue(null);
+            }
+            if(rm.graphHlog.size()>3710)
+            {
+               hlog3710Value.setValue(rm.graphHlog.get(3710));
+            }else{
+               hlog3710Value.setValue(null);
+            }
+         }else{
+            hlog72Value.setValue(null);
+            hlog232Value.setValue(null);
+            hlog812Value.setValue(null);
+            hlog1275Value.setValue(null);
+            hlog1855Value.setValue(null);
+            hlog2899Value.setValue(null);
+            hlog3710Value.setValue(null);
+         }
+      }
       if(cardName.equals("GRAPHBIT")){
          graphBitTab.setValues(rm.graphBits,rm.USbandPlanFinal,rm.DSbandPlanFinal);
       }
@@ -489,13 +534,13 @@ public class MainForm extends Form{
       infoTabPanel4.addNext(USSNRValue, 0, Frame.CENTER);      
       infoTabPanel4.addNext(USDelayValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(USINPValue, 0, Frame.CENTER);
-      infoTabPanel4.addNext(USPowerValue, 0, Frame.CENTER);
+      infoTabPanel4.addLast(USPowerValue, 0, Frame.CENTER);
 
-      panSep=new Panel();
+      /*panSep=new Panel();
       panSep.setFixedSize(10, 5);
       infoTabPanel4.addNext(panSep, 0, Frame.CENTER);
       infoTabPanel4.addNext(new Label(model.Main.view.language.hlog300), 0, Frame.CENTER);
-      infoTabPanel4.addLast(hlog300Value, 0, Frame.CENTER);
+      infoTabPanel4.addLast(hlog72Value, 0, Frame.CENTER);*/
 
       infoTabPanel4.addNext(new Label(model.Main.view.language.DS), 0, Frame.CENTER);
       infoTabPanel4.addNext(DSactRateValue, 0, Frame.CENTER);
@@ -503,13 +548,13 @@ public class MainForm extends Form{
       infoTabPanel4.addNext(DSSNRValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(DSDelayValue, 0, Frame.CENTER);
       infoTabPanel4.addNext(DSINPValue, 0, Frame.CENTER);
-      infoTabPanel4.addNext(DSPowerValue, 0, Frame.CENTER);
+      infoTabPanel4.addLast(DSPowerValue, 0, Frame.CENTER);
 
-      panSep=new Panel();
+      /*panSep=new Panel();
       panSep.setFixedSize(10, 5);
       infoTabPanel4.addNext(panSep, 0, Frame.CENTER);
       infoTabPanel4.addNext(new Label(model.Main.view.language.hlog1000), 0, Frame.CENTER);
-      infoTabPanel4.addLast(hlog1000Value, 0, Frame.CENTER);
+      infoTabPanel4.addLast(hlog232Value, 0, Frame.CENTER);*/
             
       infoTab.addLast(infoTabPanel4, 0, Frame.CENTER);
 
@@ -758,6 +803,63 @@ public class MainForm extends Form{
 
       errors15minTab.addLast(errorsTabPanelX, 0, Frame.CENTER);
 
+      hLogTab=new Frame();
+      Frame hLogTable=new Frame();
+      
+      Label subcarLabel=new Label(model.Main.view.language.subcarrier);
+      subcarLabel.setFont(this.getFont().changeStyle(Font.BOLD));
+      subcarLabel.setBorder(0, 5);
+      hLogTable.addNext(subcarLabel);
+      
+      Label freqLabel=new Label(model.Main.view.language.freq+" [MHz]");
+      freqLabel.setFont(this.getFont().changeStyle(Font.BOLD));
+      freqLabel.setBorder(0, 5);
+      hLogTable.addNext(freqLabel);
+      
+      Label hlogLabel=new Label(model.Main.view.language.hlog+" [dB]");
+      hlogLabel.setFont(this.getFont().changeStyle(Font.BOLD));
+      hlogLabel.setBorder(0, 5);
+      hLogTable.addLast(hlogLabel);
+      
+      hLogTable.addNext(new Label("72"),0, Frame.CENTER);
+      hLogTable.addNext(new Label("0,3"),0, Frame.CENTER);
+      hLogTable.addLast(hlog72Value);
+      
+      hLogTable.addNext(new Label("232"),0, Frame.CENTER);
+      hLogTable.addNext(new Label("1,0"),0, Frame.CENTER);
+      hLogTable.addLast(hlog232Value);
+      
+      hLogTable.addNext(new Label("812"),0, Frame.CENTER);
+      hLogTable.addNext(new Label("3,5"),0, Frame.CENTER);
+      hLogTable.addLast(hlog812Value);
+      
+      hLogTable.addNext(new Label("1275"),0, Frame.CENTER);
+      hLogTable.addNext(new Label("5,5"),0, Frame.CENTER);
+      hLogTable.addLast(hlog1275Value);
+      
+      hLogTable.addNext(new Label("1855"),0, Frame.CENTER);
+      hLogTable.addNext(new Label("8,0"),0, Frame.CENTER);
+      hLogTable.addLast(hlog1855Value);
+      
+      hLogTable.addNext(new Label("2899"),0, Frame.CENTER);
+      hLogTable.addNext(new Label("12,5"),0, Frame.CENTER);
+      hLogTable.addLast(hlog2899Value);
+      
+      hLogTable.addNext(new Label("3710"),0, Frame.CENTER);
+      hLogTable.addNext(new Label("16,0"),0, Frame.CENTER);
+      hLogTable.addLast(hlog3710Value);
+      
+      panSep=new Panel();   
+      panSep.setFixedSize(10, 25);
+      hLogTab.addLast(panSep);
+      
+      panSep=new Panel();
+      panSep.setFixedSize(25, 10);
+      hLogTab.addLast(hLogTable,0,Frame.CENTER);
+      
+      panSep=new Panel();   
+      panSep.setFixedSize(10, 25);
+      hLogTab.addLast(panSep);
       graphBitTab=new GraphFrame(model.Main.view.language.bits,null,15,0);
 
       graphSNRTab=new GraphFrame(model.Main.view.language.snr,"dB",65,0); //95,-32);
@@ -770,6 +872,7 @@ public class MainForm extends Form{
       cardPanel.addCard(infoTab, "INFO","INFO");
       cardPanel.addCard(errorsDayTab, "1DAY","1DAY");
       cardPanel.addCard(errors15minTab, "15MIN","15MIN");
+      cardPanel.addCard(hLogTab, "HLOG","HLOG");
       cardPanel.addCard(graphBitTab, "GRAPHBIT","GRAPHBIT");
       cardPanel.addCard(graphSNRTab, "GRAPHSNR","GRAPHSNR");
       cardPanel.addCard(graphQLNTab, "GRAPHQLN","GRAPHQLN");
@@ -778,11 +881,12 @@ public class MainForm extends Form{
       
       
       //cardNames=new String[]{"INFO","PARAM","1DAY","15MIN","GRAPHBIT","GRAPHSNR","GRAPHQLN"};
-      cardNames=new String[]{"INFO","1DAY","15MIN","GRAPHBIT","GRAPHSNR","GRAPHQLN","GRAPHHLOG"};
+      cardNames=new String[]{"INFO","1DAY","15MIN","HLOG","GRAPHBIT","GRAPHSNR","GRAPHQLN","GRAPHHLOG"};
       String cardLangs[]=new String[]{
          model.Main.view.language.menuInfo,
          model.Main.view.language.menu1Day,
          model.Main.view.language.menu15Min,
+         model.Main.view.language.menuHlog,
          model.Main.view.language.menuGraphBit,
          model.Main.view.language.menuGraphSNR,
          model.Main.view.language.menuGraphQLN,
