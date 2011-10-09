@@ -904,10 +904,10 @@ public class MainForm extends Form{
          cardButtons.put(cardNames[i], cardButton);
       }
 
-      Panel panSep2=new Panel();
+      /*Panel panSep2=new Panel();
       panSep2.setPreferredSize(15, ROW_HEIGHT);
-      tabSwitchPanel.addNext(panSep2);
-      tabSwitchPanel.addNext(statusValue);
+      tabSwitchPanel.addNext(panSep2);*/
+      tabSwitchPanel.addLast(statusValue);
 
       
       //tabSwitchPanel.addLast(xButton,0,Frame.RIGHT);
