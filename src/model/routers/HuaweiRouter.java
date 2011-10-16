@@ -323,7 +323,7 @@ public class HuaweiRouter extends Router {
                   ret.US_delay=cols.get(1);
                }
             }
-            /*if(s.indexOf("Latest 15 minutes time =")==0){
+            if(s.indexOf("Latest 15 minutes time =")==0){
                ErrorMeasurement errors=new ErrorMeasurement();
                errors.detail=s.substring("Latest 15 minutes time =".length()).trim();
                if(li.size()>i+5){
@@ -418,7 +418,7 @@ public class HuaweiRouter extends Router {
                   errors.US_UAS=uass.get(2);
                }
                ret.errorsAll=errors;
-            }*/
+            }
          }
       }
 
