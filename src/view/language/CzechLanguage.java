@@ -22,7 +22,7 @@ public class CzechLanguage extends Language {
        maxRate = "Max Rychlost";
        actualRate = "Aktuální Rychlost";
        power = "Výkon";
-       snr = "SNR";
+       snrm = "SNRM";
        inp = "INP";
        delay = "Delay";
        latn = "LATN";

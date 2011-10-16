@@ -66,7 +66,7 @@ public class Language {
     public String maxRate="Max Rate";
     public String actualRate="Actual Rate";
     public String power="Power";
-    public String snr="SNR";
+    public String snrm="SNRM";
     public String inp="INP";
     public String delay="Delay";
     public String latn="LATN";

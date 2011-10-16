@@ -12,9 +12,27 @@ public class Utils {
    public static List<String> getColumns(String s){
       return getColumns(s,0);
    }
+   
+   public static String replaceStr(String haystack,String needle,String replacement){
+        String ret="";
+        int pos=0;
+
+        int npos=-1;
+        do{
+            npos=haystack.substring(pos).indexOf(needle);
+            if(npos==-1)
+                break;
+            ret+=haystack.substring(pos,pos+npos)+replacement;
+            pos=pos+npos+needle.length();
+        }while(npos>-1);
+        ret=ret+haystack.substring(pos);
+        return ret;
+    }
+   
    public static List<String> getColumns(String s,int mincolumnCount){
       List<String> ret=new ArrayList<String>();
       s=s.trim();
+      s=replaceStr(s, "\t", " ");
       while(s.indexOf(" ")>-1){
          ret.add(s.substring(0,s.indexOf(" ")));
          s=s.substring(s.indexOf(" "));

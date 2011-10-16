@@ -521,7 +521,7 @@ public class MainForm extends Form{
       infoTabPanel4.addNext(new Panel(), 0, Frame.CENTER);      
       infoTabPanel4.addNext(new Label(model.Main.view.language.actualRate), 0, Frame.CENTER);
       infoTabPanel4.addNext(new Label(model.Main.view.language.maxRate), 0, Frame.CENTER);
-      infoTabPanel4.addNext(new Label(model.Main.view.language.snr), 0, Frame.CENTER);
+      infoTabPanel4.addNext(new Label(model.Main.view.language.snrm), 0, Frame.CENTER);
       infoTabPanel4.addNext(new Label(model.Main.view.language.delay), 0, Frame.CENTER);
       infoTabPanel4.addNext(new Label(model.Main.view.language.inp), 0, Frame.CENTER);
       infoTabPanel4.addNext(new Label(model.Main.view.language.power), 0, Frame.CENTER);
@@ -588,7 +588,7 @@ public class MainForm extends Form{
       infoTabPanel5.addNext(U2SatnValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D3SatnValue, 0, Frame.CENTER);
       infoTabPanel5.addLast(U3SatnValue, 0, Frame.CENTER);
-      infoTabPanel5.addNext(new Label(model.Main.view.language.snr), 0, Frame.CENTER);
+      infoTabPanel5.addNext(new Label(model.Main.view.language.snrm), 0, Frame.CENTER);
       infoTabPanel5.addNext(U0SNRValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(D1SNRValue, 0, Frame.CENTER);
       infoTabPanel5.addNext(U1SNRValue, 0, Frame.CENTER);
@@ -862,7 +862,7 @@ public class MainForm extends Form{
       hLogTab.addLast(panSep);
       graphBitTab=new GraphFrame(model.Main.view.language.bits,null,15,0);
 
-      graphSNRTab=new GraphFrame(model.Main.view.language.snr,"dB",65,0); //95,-32);
+      graphSNRTab=new GraphFrame(model.Main.view.language.snrm,"dB",65,0); //95,-32);
 
       graphQLNTab=new GraphFrame(model.Main.view.language.qln,"dBm/Hz",-100,-160);// -23,-150);
 
@@ -877,10 +877,8 @@ public class MainForm extends Form{
       cardPanel.addCard(graphSNRTab, "GRAPHSNR","GRAPHSNR");
       cardPanel.addCard(graphQLNTab, "GRAPHQLN","GRAPHQLN");
       cardPanel.addCard(graphHLogTab, "GRAPHHLOG","GRAPHHLOG");
-      //cardPanel.setFixedSize(480, 600);
+     
       
-      
-      //cardNames=new String[]{"INFO","PARAM","1DAY","15MIN","GRAPHBIT","GRAPHSNR","GRAPHQLN"};
       cardNames=new String[]{"INFO","1DAY","15MIN","HLOG","GRAPHBIT","GRAPHSNR","GRAPHQLN","GRAPHHLOG"};
       String cardLangs[]=new String[]{
          model.Main.view.language.menuInfo,
@@ -899,21 +897,14 @@ public class MainForm extends Form{
          cardButton.action="TABSWITCH_"+cardNames[i];
          cardButton.backGround=tabButtonColor;
          cardButton.addListener(Main.controller.mainEventListener);
-         //cardButton.setFixedSize(80, ROW_HEIGHT);
          tabSwitchPanel.addNext(cardButton);
          cardButtons.put(cardNames[i], cardButton);
       }
 
-      /*Panel panSep2=new Panel();
-      panSep2.setPreferredSize(15, ROW_HEIGHT);
-      tabSwitchPanel.addNext(panSep2);*/
       tabSwitchPanel.addLast(statusValue);
 
       
-      //tabSwitchPanel.addLast(xButton,0,Frame.RIGHT);
       selectCard("INFO");
-     // tabSwitchPanel.addLast(new Panel());
-      //tabSwitchPanel.setFixedSize(formWidth, 25);
       addLast(tabSwitchPanel,0,Frame.TOP);
 
       addLast(cardPanel);
