@@ -22,7 +22,7 @@ public class CzechNoDiaLanguage extends Language {
        maxRate = "Max Rychlost";
        actualRate = "Aktualni Rychlost";
        power = "Vykon";
-       snr = "SNR";
+       snrm = "SNRM";
        inp = "INP";
        delay = "Delay";
        latn = "LATN";

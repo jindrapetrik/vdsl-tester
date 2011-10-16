@@ -126,9 +126,9 @@ public abstract class Router {
         }
         if (line.toLowerCase().indexOf("password") > -1) {
             sendLine(connectionPassword);
-            readLines();
-            loggedIn=true;
-            Arbiter.inform("loggingInFinish");
+                  readLines();
+                  loggedIn=true;            
+                  Arbiter.inform("loggingInFinish");
             return;
         }
         sock.setSoTimeout(model.Main.socketTimeout);
@@ -358,6 +358,10 @@ public abstract class Router {
      * @param command Command to send
      */
     public void sendCommand(String command) throws IOException {
+        if(fakeFile!=null)
+        {
+           return;
+        }
         sendLine(command);
         readLine();
         readLines();

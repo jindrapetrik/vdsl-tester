@@ -14,36 +14,65 @@ import model.Utils;
  *
  * @author JPEXS
  */
-public class ComtrendRouter extends Router {
+public class HuaweiRouter extends Router {
 
-   public ComtrendRouter()
+   protected boolean modeSwitched=false;
+   public HuaweiRouter()
    {
-      super("Comtrend");
+      super("Huawei");
+   }
+
+   @Override
+   public void login() throws IOException {
+      if(loggedIn){
+         return;
+      }
+      modeSwitched=false; //Prompt ATM>
+      super.login();
+      modeSwitched=true; //Prompt # 
+      sendCommand("sh");
    }
 
    @Override
    public void disconnect() {
       if(loggedIn){
+         modeSwitched=false;
          try{
-            sendCommand("exit");
+            sendCommand("exit");//# exit
+            sendCommand("exit");//ATM>exit
          }catch(Exception ex)
          {
             
-         }
+         }         
       }
       super.disconnect();
+      
    }
+   
+   
 
+   
    
    
    @Override
    public boolean checkRouterHeader(String header) {
-      return header.equals(" > ");
+      if(modeSwitched)
+      {
+            return header.equals("# ");
+      }else{
+            return header.equals("ATP>");
+      }
    }
 
+   @Override
    public int getRouterHeaderLength()
    {
-      return " > ".length();
+      if(modeSwitched)
+      {
+            return "# ".length();
+      }else{
+            return "ATP>".length();
+      }
    }
 
    private void parseBands(String s,List<Band> bandList)
@@ -71,7 +100,7 @@ public class ComtrendRouter extends Router {
       }
       List<String> li;
 
-      ret.name="Comtrend";
+      ret.name="Huawei";
 
       if(needs!=null){
          if(needs.isEmpty()){
@@ -79,6 +108,7 @@ public class ComtrendRouter extends Router {
          }
       }
 
+      //Same as Comtrend
       if((needs==null)
         ||needs.contains("max_rate")
         ||needs.contains("actual_rate")
@@ -91,7 +121,7 @@ public class ComtrendRouter extends Router {
         ||needs.contains("band_initial_plan")
         ||needs.contains("status")
         ){
-         li=sendRequest("adsl info --pbParams");
+         li=sendRequest("xdslcmd info --pbParams");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Currently not in VDSL modulation")>-1)
@@ -143,7 +173,7 @@ public class ComtrendRouter extends Router {
                }
             }
             if(s.indexOf("Retrain Reason:")==0){
-                ret.reconnect=Utils.getStringBetween("Retrain Reason: ", null, s);
+                ret.reconnect=Utils.getStringBetween("Retrain Reason:\t", null, s);
             }
             if(s.indexOf("Max:")==0){
                ret.US_max_rate=Utils.getStringBetween("Upstream rate = ", ",", s);
@@ -205,7 +235,7 @@ public class ComtrendRouter extends Router {
 
       }
 
-      if((needs==null)
+      /*if((needs==null)
         ||needs.contains("wanIP")
         ){
          li=sendRequest("route show");
@@ -218,7 +248,7 @@ public class ComtrendRouter extends Router {
                }
             }
          }
-      }
+      }*/
       
 
       if((needs==null)
@@ -242,9 +272,12 @@ public class ComtrendRouter extends Router {
         ||needs.contains("HEC")
         ||needs.contains("linkTime"))
          {
-            li=sendRequest("adsl info --stats");
+            li=sendRequest("xdslcmd info --stats");
+            if(li.isEmpty()){
+               li=sendRequest("xdslcmd info --show");
+            }
          }else{
-            li=sendRequest("adsl info --show");
+            li=sendRequest("xdslcmd info --show");
          }
          
          for(int i=0;i<li.size();i++){
@@ -290,7 +323,7 @@ public class ComtrendRouter extends Router {
                   ret.US_delay=cols.get(1);
                }
             }
-            if(s.indexOf("Latest 15 minutes time =")==0){
+            /*if(s.indexOf("Latest 15 minutes time =")==0){
                ErrorMeasurement errors=new ErrorMeasurement();
                errors.detail=s.substring("Latest 15 minutes time =".length()).trim();
                if(li.size()>i+5){
@@ -385,20 +418,20 @@ public class ComtrendRouter extends Router {
                   errors.US_UAS=uass.get(2);
                }
                ret.errorsAll=errors;
-            }
+            }*/
          }
       }
 
       if((needs==null)
         ||needs.contains("graphBits")
         ){
-         li=sendRequest("adsl info --Bits");
+         li=sendRequest("xdslcmd info --Bits");
          for(int i=0;i<li.size();i++){
-            String s=li.get(i);
+            String s=li.get(i);            
             if(s.indexOf("Tone number      Bit Allocation")==0){
                ret.graphBits=new ArrayList<Double>();
                for(int j=0;j<li.size()-i;j++){
-                  if(li.size()>i+1+j){
+                  if(li.size()>i+1+j){                     
                      List<String> cols=Utils.getColumns(li.get(i+1+j),2);
                      if(cols.get(0).equals(""+j)){
                         int bits=0;
@@ -418,7 +451,7 @@ public class ComtrendRouter extends Router {
       if((needs==null)
         ||needs.contains("graphSNR")
         ){
-         li=sendRequest("adsl info --SNR");
+         li=sendRequest("xdslcmd info --SNR");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Tone number      SNR")==0){
@@ -444,7 +477,7 @@ public class ComtrendRouter extends Router {
       if((needs==null)
         ||needs.contains("graphQLN")
         ){
-         li=sendRequest("adsl info --QLN");
+         li=sendRequest("xdslcmd info --QLN");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Tone number      QLN")==0){
@@ -470,7 +503,7 @@ public class ComtrendRouter extends Router {
       if((needs==null)
         ||needs.contains("graphHlog")
         ){
-         li=sendRequest("adsl info --Hlog");
+         li=sendRequest("xdslcmd info --Hlog");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Tone number      Hlog")==0){
@@ -493,16 +526,16 @@ public class ComtrendRouter extends Router {
          }
       }
 
-      if((needs==null)
+      /*if((needs==null)
         ||needs.contains("SWVersion")
         ){
          li=sendRequest("version");
          if(li.size()>0){
             ret.SWVersion=li.get(0);
          }
-      }
+      }*/
 
-      if((needs==null)
+      /*if((needs==null)
         ||needs.contains("upTime")
         ){
          li=sendRequest("sysinfo");
@@ -519,7 +552,7 @@ public class ComtrendRouter extends Router {
             }
             ret.upTime=s;
          }
-      }
+      }*/
 
       return ret;
    }

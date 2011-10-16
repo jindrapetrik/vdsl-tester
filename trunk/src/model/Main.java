@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import model.routers.ComtrendRouter;
+import model.routers.HuaweiRouter;
 import view.View;
 
 /**
@@ -32,10 +33,11 @@ public class Main {
    public static int socketTimeout=5000;
    public static int delay=5000;
    public static String fakeFile=null;
-   public static String version="beta 2";
+   public static String version="beta 3";
 
    static{
       routers.add(new ComtrendRouter());
+      routers.add(new HuaweiRouter());
    }
 
    public static void loadConfig(){
