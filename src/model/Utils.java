@@ -49,6 +49,45 @@ public class Utils {
       return ret;
    }
 
+   public static String formatSeconds(String time){      
+      try{
+         long timeL=Long.parseLong(time);
+         return formatSeconds(timeL);
+      }catch(NumberFormatException nfe){
+         
+      }
+      return null;
+   }
+           
+   
+   public static String formatSeconds(long time){
+      String ret="";
+      long sec=1;
+      long min=60*sec;
+      long hour=60*min;
+      long day=hour*24;
+      long remainder;
+      long days= time /day;
+      remainder = time - days*day;
+      long hours = time / hour;
+      remainder = time - hours * hour;
+      long mins = remainder / min;
+      remainder = remainder - mins * min;
+      long secs = remainder;
+
+      if(days>0){
+         ret+=days+"d ";
+      }
+      if((hours>0)||(days>0)){
+         ret+=hours+"h ";
+      }
+      if((hours>0)||(days>0)||(mins>0)){
+         ret+=mins+"m ";
+      }
+      ret+=secs+"s";          
+      return ret;
+   }
+   
    public static String getStringBetween(String a,String b,String content){
       if(content==null){
          return null;

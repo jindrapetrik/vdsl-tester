@@ -1,10 +1,6 @@
 package view;
 
-import eve.fx.AlignmentConstants;
 import eve.fx.Color;
-import eve.ui.Frame;
-import eve.ui.Label;
-import eve.ui.formatted.TextDisplay;
 
 /**
  *
@@ -32,12 +28,12 @@ public class StatusValueField extends ValueField {
          selColor=Color.DarkGray;
       }else if(value.equals("Idle")){
          selColor=Color.Red;
-      }else if(value.equals("G.994 Training")){
+      }else if(value.equals("G.994 Training")||value.equals("G.922 Channel Analysis")){
          selColor=new Color(0xEE,0x9A,0x00); //orange
-      }else if(value.equals("G.993 Started")){
-         selColor=new Color(0xff,0xff,0x00); //orange
+      }else if(value.equals("G.993 Started")||value.equals("G.992 Started")){
+         selColor=new Color(0xff,0xff,0x00); //yellow
       }else if(value.equals("Showtime")){
-         selColor=new Color(0,0xff,0); //orange
+         selColor=new Color(0,0xff,0); //green
       }
       pageColor=selColor;
       repaintNow();

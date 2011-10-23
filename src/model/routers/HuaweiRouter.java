@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import model.Band;
 import model.ErrorMeasurement;
+import model.Main;
 import model.Router;
 import model.RouterMeasurement;
 import model.Utils;
@@ -16,7 +17,7 @@ import model.Utils;
  */
 public class HuaweiRouter extends Router {
 
-   protected boolean modeSwitched=false;
+   protected boolean inShell=false;
    public HuaweiRouter()
    {
       super("Huawei");
@@ -27,16 +28,27 @@ public class HuaweiRouter extends Router {
       if(loggedIn){
          return;
       }
-      modeSwitched=false; //Prompt ATM>
+      inShell=false; //Prompt ATM>
       super.login();
-      modeSwitched=true; //Prompt # 
       sendCommand("sh");
    }
 
    @Override
+   public void sendCommand(String command) throws IOException {
+      if(command.equals("sh")&&(!inShell)){
+         inShell=true;
+      }
+      if(command.equals("exit")&&(inShell)){
+         inShell=false;
+      }
+      super.sendCommand(command);
+   }
+   
+   
+
+   @Override
    public void disconnect() {
       if(loggedIn){
-         modeSwitched=false;
          try{
             sendCommand("exit");//# exit
             sendCommand("exit");//ATM>exit
@@ -56,7 +68,7 @@ public class HuaweiRouter extends Router {
    
    @Override
    public boolean checkRouterHeader(String header) {
-      if(modeSwitched)
+      if(inShell)
       {
             return header.equals("# ");
       }else{
@@ -67,11 +79,18 @@ public class HuaweiRouter extends Router {
    @Override
    public int getRouterHeaderLength()
    {
-      if(modeSwitched)
+      if(inShell)
       {
             return "# ".length();
       }else{
             return "ATP>".length();
+      }
+   }
+   
+   private void ensureInShell() throws IOException
+   {
+      if(!inShell){
+         sendCommand("sh");
       }
    }
 
@@ -108,6 +127,25 @@ public class HuaweiRouter extends Router {
          }
       }
 
+      ensureInShell();
+      
+      if((needs==null)
+        ||needs.contains("name"))
+      {
+         sendCommand("exit"); //back to ATM> mode
+         li=sendRequest("debug display cwmp");
+         for(int i=0;i<li.size();i++){
+            String s=li.get(i);
+            String model=Utils.getStringBetween("ModelName:", null, s);
+            if(model!=null){
+               ret.name+=" "+model.trim();
+            }
+            
+         }
+         
+         sendCommand("sh"); //back to shell
+      }
+      
       //Same as Comtrend
       if((needs==null)
         ||needs.contains("max_rate")
@@ -263,7 +301,7 @@ public class HuaweiRouter extends Router {
         ||needs.contains("CRC")
         ||needs.contains("HEC")
         ||needs.contains("linkTime")
-        ||needs.contains("type")
+        ||needs.contains("type")              
         ){
          
          if(needs.contains("errors")
@@ -273,7 +311,7 @@ public class HuaweiRouter extends Router {
         ||needs.contains("linkTime"))
          {
             li=sendRequest("xdslcmd info --stats");
-            if(li.isEmpty()){
+            if(li.isEmpty()){               
                li=sendRequest("xdslcmd info --show");
             }
          }else{
@@ -526,34 +564,35 @@ public class HuaweiRouter extends Router {
          }
       }
 
-      /*if((needs==null)
+      if((needs==null)
         ||needs.contains("SWVersion")
         ){
-         li=sendRequest("version");
-         if(li.size()>0){
-            ret.SWVersion=li.get(0);
+         li=sendRequest("xdslcmd --version");
+         if(li.size()>=2){
+            ret.SWVersion=Utils.getStringBetween(":", null, li.get(1));
          }
-      }*/
+      }
 
-      /*if((needs==null)
+      if((needs==null)
         ||needs.contains("upTime")
         ){
-         li=sendRequest("sysinfo");
-         if(li.size()>=2){
-            String s=li.get(1);
-            s=Utils.getStringBetween("up ", null, s);
-            if(s!=null){
-               s=s.trim();
-               if(s.length()>0){
-                  if(s.charAt(s.length()-1)==','){
-                     s=s.substring(0,s.length()-1);
-                  }
-               }
-            }
-            ret.upTime=s;
+         sendCommand("exit"); //Switch to ATM> mode
+         li=sendRequest("debug display sysuptime");
+         for(int i=0;i<li.size();i++){
+            String s=li.get(1);            
+            ret.upTime=Utils.formatSeconds(Utils.getStringBetween("up time: ", null, s));
          }
-      }*/
+         sendCommand("sh"); //Switch back to Shell
+      }
 
+      if(Main.isDebugMode()){ //Try to execute some commands
+         sendCommand("ls /bin");
+         sendCommand("ls /proc");
+         sendCommand("ls /sys");
+         sendCommand("ifconfig");
+         sendCommand("uptime");         
+      }
+      
       return ret;
    }
 
