@@ -105,9 +105,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-       //if(eve.sys.Device.isMobile())       
        Application.startApplication(args);
-       //router=new ComtrendRouter();
        loadConfig();
        if(isDebugMode())
        {
@@ -120,12 +118,7 @@ public class Main {
        }
        controller=new Controller();
        view=new View();
-       view.initDisplay();
-       
-       /*HashSet<String> needs=new HashSet();
-       RouterMeasurement m=r.doMeasure(needs);
-       System.out.println(m);
-       exit();*/
+       view.initDisplay();       
     }
 
 
