@@ -51,8 +51,8 @@ public class Utils {
 
    public static String formatSeconds(String time){      
       try{
-         long timeL=Long.parseLong(time);
-         return formatSeconds(timeL);
+         double timeD=Double.parseDouble(time);
+         return formatSeconds(timeD);
       }catch(NumberFormatException nfe){
          
       }
@@ -60,8 +60,10 @@ public class Utils {
    }
            
    
-   public static String formatSeconds(long time){
+   public static String formatSeconds(double timeD){
       String ret="";
+      long time=(long)Math.floor(timeD);
+      long msec=(long)((timeD-Math.floor(timeD))*1000);
       long sec=1;
       long min=60*sec;
       long hour=60*min;
@@ -83,8 +85,12 @@ public class Utils {
       }
       if((hours>0)||(days>0)||(mins>0)){
          ret+=mins+"m ";
+      }            
+      ret+=secs+"s";    
+      
+      if(msec!=0){
+         ret+= " "+msec + "ms";
       }
-      ret+=secs+"s";          
       return ret;
    }
    
