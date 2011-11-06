@@ -31,7 +31,17 @@ public abstract class Router {
     public String name;
     protected boolean loggedIn=false;
     protected String fakeFile=null;
-
+    
+    public static final int TELNET_IAC=255;
+    public static final int TELNET_WILL=251;
+    public static final int TELNET_WONT=252;
+    public static final int TELNET_DO=253;
+    public static final int TELNET_DONT=254;
+        
+    public static final int TELNET_OPTION_ECHO=1;
+    public static final int TELNET_OPTION_SUPPRESS_GO_AHEAD=3;
+    public static final int TELNET_OPTION_TERMINAL_TYPE=24;
+    
     public void setFakeFile(String file){
        this.fakeFile=file;
     }
@@ -99,7 +109,6 @@ public abstract class Router {
         os = sock.getOutputStream();
         connected = true;
         sock.setSoTimeout(100);
-        readLine(); //telnet header
         Arbiter.inform("connectingFinish");
         return true;
     }
@@ -116,7 +125,7 @@ public abstract class Router {
         Arbiter.inform("loggingInStart");
         sock.setSoTimeout(2000);
         String line = readAndStopAfterChar(':');
-        readByte(); //space
+        readByte(); //space        
         if ((line.toLowerCase().indexOf("login") > -1) || (line.toLowerCase().indexOf("user") > -1)) {
             sendLine(connectionUserName);
             readLine();
@@ -145,7 +154,12 @@ public abstract class Router {
             if (!connect()) {
                 return -1;
             }
-            return is.read();
+            int i=is.read();
+            if(i==TELNET_IAC){
+                 receivedIAC();
+                 i=readByte();
+            }
+            return i;
         } catch (SocketTimeoutException ex) {
         }
         return 0;
@@ -159,9 +173,94 @@ public abstract class Router {
         if (!connect()) {
             return -1;
         }
-        return is.read();
+        int i=is.read();
+        if(i==TELNET_IAC){
+                 receivedIAC();
+                 i=readByteDontWait();
+        }
+        return i;
+        
     }
 
+    
+    protected void sendTelnetDo(int option) throws IOException{
+       sendTelnetCommand(TELNET_DO,new byte[]{(byte)option});
+       ProgramLog.print("<SENT TELNET COMMAND DO "+option+">");
+    }
+    
+    protected void sendTelnetWill(int option) throws IOException{
+       sendTelnetCommand(TELNET_WILL,new byte[]{(byte)option});
+       ProgramLog.print("<SENT TELNET COMMAND WILL "+option+">");
+    }
+    
+    protected void sendTelnetDont(int option) throws IOException{
+       sendTelnetCommand(TELNET_DONT,new byte[]{(byte)option});
+       ProgramLog.print("<SENT TELNET COMMAND DONT "+option+">");
+    }
+    
+    protected void sendTelnetWont(int option) throws IOException{       
+       sendTelnetCommand(TELNET_WONT,new byte[]{(byte)option});
+       ProgramLog.print("<SENT TELNET COMMAND WONT "+option+">");
+    }
+    
+    protected void sendTelnetCommand(int command,byte params[]) throws IOException{
+       os.write(TELNET_IAC);
+       os.write(command);
+       if(params!=null){
+          os.write(params);
+       }       
+    }
+    
+    /**
+     * IAC Telnet code received
+     */
+    protected void receivedIAC() throws IOException{
+       int command=is.read();
+       int option=-1;
+       switch(command){
+          case TELNET_WILL:
+          case TELNET_DO:
+          case TELNET_DONT:
+          case TELNET_WONT:
+             option=is.read();
+             break;
+          default:
+                ProgramLog.print("<UNKNOWN TELNET COMMAND "+command+">");
+                return;
+       }
+       
+       switch(command){
+          case TELNET_WILL:                 
+               ProgramLog.print("<TELNET COMMAND WILL "+option+">");
+             switch(option){
+                case TELNET_OPTION_ECHO:
+                   sendTelnetDo(TELNET_OPTION_ECHO);
+                   break;
+                case TELNET_OPTION_SUPPRESS_GO_AHEAD:
+                   sendTelnetDo(TELNET_OPTION_SUPPRESS_GO_AHEAD);
+                   break;
+                case TELNET_OPTION_TERMINAL_TYPE:
+                   sendTelnetDont(TELNET_OPTION_TERMINAL_TYPE);
+                   break;
+                default:
+                   sendTelnetDont(option);
+                   break;
+             }
+             break;
+          case TELNET_DO:
+             ProgramLog.print("<TELNET COMMAND DO "+option+">");
+             sendTelnetWont(option);
+             break;
+          case TELNET_DONT:
+             ProgramLog.print("<TELNET COMMAND DONT "+option+">");
+             break;
+          case TELNET_WONT:
+             ProgramLog.print("<TELNET COMMAND WONT "+option+">");
+             break;
+       }
+       
+    }
+    
     /**
      * Reads one line from router
      * @return Line which was read
@@ -182,24 +281,31 @@ public abstract class Router {
             }
             do {
                 i = is.read();
+                if(i==TELNET_IAC){
+                   receivedIAC();
+                   continue;
+                }
                 //ProgramLog.println("readline:"+i);
                 if ((i != '\n') && (i != '\r')) {
                     //ProgramLog.println("A");
                     line += (char) i;
                     //ProgramLog.println("B");
                 }
+                if (debugMode) {
+                    ProgramLog.print("" + (char) i);
+                }
                 if ((i == '\n') && (prev == '\r')) {
                     if (debugMode) {
                         //ProgramLog.println("\"");
                        //ProgramLog.println();
-                       ProgramLog.print("\n");
+                       //ProgramLog.print("\n");
                     }
                     //ProgramLog.println("C");
                     return line;
                 }
                 if (checkRouterHeader(line)) {
                     if (debugMode) {
-                        ProgramLog.print(((char) i)+"");
+                        ProgramLog.print(((char) i)+"");                        
                         //"\""
                     }
                    // ProgramLog.println("D");
@@ -209,10 +315,7 @@ public abstract class Router {
                 if (i == -1) {
                     //ProgramLog.println("E");
                     break;
-                }
-                if (debugMode) {
-                    ProgramLog.print("" + (char) i);
-                }
+                }                
             } while (!end);
         } catch (SocketTimeoutException ex) {
         }
@@ -255,6 +358,10 @@ public abstract class Router {
         String line = "";
         do {
             i = is.read();
+            if(i==TELNET_IAC){
+                   receivedIAC();
+                   continue;
+            }
             if ((i != '\n') && (i != '\r')) {
                 line += (char) i;
             }
@@ -292,9 +399,13 @@ public abstract class Router {
             int prev = 0;
             do {
                 i = is.read();
-                if ((i != '\n') && (i != '\r')) {
-                    line += (char) i;
+                if(i==TELNET_IAC){
+                   receivedIAC();
+                   continue;
                 }
+                //if ((i != '\n') && (i != '\r')) {
+                    line += (char) i;
+                //}
                 /*if((i=='\n')&&(prev=='\r')){
                 if(debugMode)
                 ProgramLog.println("Read till char - EOL:"+line);
@@ -382,29 +493,33 @@ public abstract class Router {
             }
             do {
                 i = is.read();
+                if(i==TELNET_IAC){
+                   receivedIAC();
+                   continue;
+                }
                 if ((i != '\n') && (i != '\r')) {
                     line += (char) i;
+                }
+                if (debugMode) {
+                    ProgramLog.print("" + (char) i);
                 }
                 if ((i == '\n') && (prev == '\r')) {
                     if (debugMode) {
                         //ProgramLog.println("\"");
-                        ProgramLog.print("\n");
+                        //ProgramLog.print("\n");
                     }
                     ret.add(line);
                     line = "";
                 }
                 if (checkRouterHeader(line)) {
-                    if (debugMode) {
+                    /*if (debugMode) {
                         ProgramLog.print(((char) i) + ""); //\""
-                    }
+                    }*/
                     return ret;
                 }
                 prev = i;
                 if (i == -1) {
                     return null;
-                }
-                if ((i != '\n') && (i != '\r')) {                   
-                    ProgramLog.print("" + (char) i);                   
                 }
             } while (!end);
         } catch (SocketTimeoutException ex) {

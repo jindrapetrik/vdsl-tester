@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import model.Band;
 import model.ErrorMeasurement;
-import model.Main;
 import model.Router;
 import model.RouterMeasurement;
 import model.Utils;
@@ -30,7 +29,9 @@ public class HuaweiRouter extends Router {
       }
       inShell=false; //Prompt ATM>
       super.login();
-      sendCommand("sh");
+      if(loggedIn){
+         sendCommand("sh");
+      }
    }
 
    @Override
@@ -572,25 +573,26 @@ public class HuaweiRouter extends Router {
             ret.SWVersion=Utils.getStringBetween(":", null, li.get(1));
          }
       }
-
+           
       if((needs==null)
         ||needs.contains("upTime")
         ){
-         sendCommand("exit"); //Switch to ATM> mode
-         li=sendRequest("debug display sysuptime");
-         for(int i=0;i<li.size();i++){
-            String s=li.get(1);            
-            ret.upTime=Utils.formatSeconds(Utils.getStringBetween("up time: ", null, s));
+         li=sendRequest("cat /proc/uptime");
+         if(li.size()>=1){
+               ret.upTime=Utils.formatSeconds(Utils.getColumns(li.get(0)).get(0));
          }
-         sendCommand("sh"); //Switch back to Shell
       }
-
-      if(Main.isDebugMode()){ //Try to execute some commands
-         sendCommand("ls /bin");
-         sendCommand("ls /proc");
-         sendCommand("ls /sys");
-         sendCommand("ifconfig");
-         sendCommand("uptime");         
+      
+      if((needs==null)
+        ||needs.contains("wanIP")
+        ){
+         li=sendRequest("ip addr show label \"ppp*\"");
+         for(int i=0;i<li.size();i++){
+            String s=li.get(i).trim();
+            if(s.startsWith("inet ")){
+               ret.wanIP=Utils.getStringBetween("inet ", " peer", s);
+            }
+         }
       }
       
       return ret;
