@@ -42,10 +42,29 @@ public abstract class Router {
     public static final int TELNET_OPTION_SUPPRESS_GO_AHEAD=3;
     public static final int TELNET_OPTION_TERMINAL_TYPE=24;
     
+    private boolean finishing=false;
+    
     public void setFakeFile(String file){
        this.fakeFile=file;
     }
 
+    
+    protected synchronized boolean isFinishing()
+    {
+       return finishing;
+    }
+    
+    protected synchronized void setFinishing()
+    {
+       this.finishing=true;
+    }
+    
+    protected synchronized void checkNotFinishing(){
+       if(isFinishing())
+       {
+          throw new FinishException();
+       }
+    }
 
     public void setConnectionPassword(String connectionPassword) {
         this.connectionPassword = connectionPassword;
@@ -123,9 +142,12 @@ public abstract class Router {
 
         connect();
         Arbiter.inform("loggingInStart");
-        sock.setSoTimeout(2000);
+        sock.setSoTimeout(2000);        
+        Arbiter.inform("loggingIn1");
         String line = readAndStopAfterChar(':');
+        Arbiter.inform("loggingIn2");
         readByte(); //space        
+        Arbiter.inform("loggingIn3");
         if ((line.toLowerCase().indexOf("login") > -1) || (line.toLowerCase().indexOf("user") > -1)) {
             sendLine(connectionUserName);
             readLine();
@@ -399,6 +421,9 @@ public abstract class Router {
             int prev = 0;
             do {
                 i = is.read();
+                if(i==-1){
+                   throw new NoAnswerException();
+                }
                 if(i==TELNET_IAC){
                    receivedIAC();
                    continue;
@@ -459,9 +484,19 @@ public abstract class Router {
         readLine();
         ArrayList<String> ret = readLines();
         if (ret == null) {
-            throw new IOException("No answer");
+            throw new NoAnswerException();
         }
         return ret;
+    }
+    
+    /**
+     * Sends measuring request to the router and returns answer
+     * @param command Command to send
+     * @return Array of returned lines
+     */
+    public ArrayList<String> sendMeasureRequest(String command) throws IOException {
+       checkNotFinishing();
+       return sendRequest(command);
     }
 
     /**
@@ -476,6 +511,15 @@ public abstract class Router {
         sendLine(command);
         readLine();
         readLines();
+    }
+    
+    /**
+     * Sends measure command to the router
+     * @param command Command to send
+     */
+    public void sendMeasureCommand(String command) throws IOException {
+       checkNotFinishing();
+       sendCommand(command);
     }
 
     public abstract boolean checkRouterHeader(String header);
@@ -536,7 +580,7 @@ public abstract class Router {
 
     public abstract RouterMeasurement doMeasure(HashSet<String> needs) throws IOException;
 
-    public ArrayList<String> sendFakeRequest(String command,String file) throws IOException {
+    public ArrayList<String> sendFakeRequest(String command,String file) throws IOException {        
         ArrayList<String> ret=new ArrayList<String>();
         BufferedReader br=new BufferedReader(new FileReader(file));
         String s;

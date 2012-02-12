@@ -33,7 +33,7 @@ public class Main {
    public static int socketTimeout=5000;
    public static int delay=5000;
    public static String fakeFile=null;
-   public static String version="beta 4";
+   public static String version="beta 5";
 
    static{
       routers.add(new ComtrendRouter());
@@ -124,12 +124,27 @@ public class Main {
 
     public static final Object lock=new Object();;
 
-    public static void exit(){
+    public static void exit(){       
        if(router!=null)
        {
-          router.disconnect();
-       }
-       Application.exit(0);
+          Arbiter.inform("terminating");
+          synchronized(lock){
+            router.disconnect();                        
+          }
+       }       
+       terminated();
+    }
+    
+    public static void terminating(){       
+       if(router!=null)
+       {
+          router.setFinishing();
+       }       
+    }
+    
+    public static void terminated(){    
+       Arbiter.inform("terminated");
+       Application.exit(0);    
     }
 
 
@@ -151,6 +166,8 @@ public class Main {
                            Arbiter.inform("finalupdateStart");
                            view.updateFields(rm,cardName);
                            Arbiter.inform("finalupdateFinish");
+                        } catch (FinishException fex){                           
+                           Arbiter.inform("measureTerminated");
                         } catch (Exception ex) {
                            router.disconnect();
                            Arbiter.inform("exception",ex);
