@@ -47,6 +47,7 @@ public class RulerPanel extends Panel {
       this.max=max;
       this.stepCount=stepCount;
       this.delta=max-min;
+      autoStep();
       repaint();
    }
 

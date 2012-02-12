@@ -158,6 +158,23 @@ public class RouterMeasurement {
               ;
    }
 
+   public void fixBandPlans()
+   {
+      if((USbandPlanFinal!=null)&&(!USbandPlanFinal.isEmpty())){         
+          USbandPlanFinal.get(0).from = 0;
+          USbandPlanFinal.get(0).to = 55;
+      }
+      if((USbandPlanInitial!=null)&&(!USbandPlanInitial.isEmpty())){         
+          USbandPlanInitial.get(0).from = 0;
+          USbandPlanInitial.get(0).to = 55;
+      }
+      if((DSbandPlanFinal!=null)&&(!DSbandPlanFinal.isEmpty())){         
+          DSbandPlanFinal.get(0).from = 56;
+      }
+      if((DSbandPlanInitial!=null)&&(!DSbandPlanInitial.isEmpty())){         
+          DSbandPlanInitial.get(0).from = 56;
+      }
+   }
 
 
 }
