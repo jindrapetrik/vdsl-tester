@@ -91,7 +91,7 @@ public class ComtrendRouter extends Router {
         ||needs.contains("band_initial_plan")
         ||needs.contains("status")
         ){
-         li=sendRequest("adsl info --pbParams");
+         li=sendMeasureRequest("adsl info --pbParams");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Currently not in VDSL modulation")>-1)
@@ -203,12 +203,12 @@ public class ComtrendRouter extends Router {
             }
          }
 
-      }
+      }      
 
       if((needs==null)
         ||needs.contains("wanIP")
         ){
-         li=sendRequest("route show");
+         li=sendMeasureRequest("route show");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             List<String> cols=Utils.getColumns(s);
@@ -242,9 +242,9 @@ public class ComtrendRouter extends Router {
         ||needs.contains("HEC")
         ||needs.contains("linkTime"))
          {
-            li=sendRequest("adsl info --stats");
+            li=sendMeasureRequest("adsl info --stats");
          }else{
-            li=sendRequest("adsl info --show");
+            li=sendMeasureRequest("adsl info --show");
          }
          
          for(int i=0;i<li.size();i++){
@@ -392,7 +392,7 @@ public class ComtrendRouter extends Router {
       if((needs==null)
         ||needs.contains("graphBits")
         ){
-         li=sendRequest("adsl info --Bits");
+         li=sendMeasureRequest("adsl info --Bits");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Tone number      Bit Allocation")==0){
@@ -418,7 +418,7 @@ public class ComtrendRouter extends Router {
       if((needs==null)
         ||needs.contains("graphSNR")
         ){
-         li=sendRequest("adsl info --SNR");
+         li=sendMeasureRequest("adsl info --SNR");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Tone number      SNR")==0){
@@ -444,7 +444,7 @@ public class ComtrendRouter extends Router {
       if((needs==null)
         ||needs.contains("graphQLN")
         ){
-         li=sendRequest("adsl info --QLN");
+         li=sendMeasureRequest("adsl info --QLN");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Tone number      QLN")==0){
@@ -470,7 +470,7 @@ public class ComtrendRouter extends Router {
       if((needs==null)
         ||needs.contains("graphHlog")
         ){
-         li=sendRequest("adsl info --Hlog");
+         li=sendMeasureRequest("adsl info --Hlog");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Tone number      Hlog")==0){
@@ -496,7 +496,7 @@ public class ComtrendRouter extends Router {
       if((needs==null)
         ||needs.contains("SWVersion")
         ){
-         li=sendRequest("version");
+         li=sendMeasureRequest("version");
          if(li.size()>0){
             ret.SWVersion=li.get(0);
          }
@@ -505,7 +505,7 @@ public class ComtrendRouter extends Router {
       if((needs==null)
         ||needs.contains("upTime")
         ){
-         li=sendRequest("sysinfo");
+         li=sendMeasureRequest("sysinfo");
          if(li.size()>=2){
             String s=li.get(1);
             s=Utils.getStringBetween("up ", null, s);

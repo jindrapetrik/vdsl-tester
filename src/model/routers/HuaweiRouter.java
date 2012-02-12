@@ -134,7 +134,7 @@ public class HuaweiRouter extends Router {
         ||needs.contains("name"))
       {
          sendCommand("exit"); //back to ATM> mode
-         li=sendRequest("debug display cwmp");
+         li=sendMeasureRequest("debug display cwmp");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             String model=Utils.getStringBetween("ModelName:", null, s);
@@ -160,7 +160,7 @@ public class HuaweiRouter extends Router {
         ||needs.contains("band_initial_plan")
         ||needs.contains("status")
         ){
-         li=sendRequest("xdslcmd info --pbParams");
+         li=sendMeasureRequest("xdslcmd info --pbParams");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Currently not in VDSL modulation")>-1)
@@ -277,7 +277,7 @@ public class HuaweiRouter extends Router {
       /*if((needs==null)
         ||needs.contains("wanIP")
         ){
-         li=sendRequest("route show");
+         li=sendMeasureRequest("route show");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             List<String> cols=Utils.getColumns(s);
@@ -311,12 +311,12 @@ public class HuaweiRouter extends Router {
         ||needs.contains("HEC")
         ||needs.contains("linkTime"))
          {
-            li=sendRequest("xdslcmd info --stats");
+            li=sendMeasureRequest("xdslcmd info --stats");
             if(li.isEmpty()){               
-               li=sendRequest("xdslcmd info --show");
+               li=sendMeasureRequest("xdslcmd info --show");
             }
          }else{
-            li=sendRequest("xdslcmd info --show");
+            li=sendMeasureRequest("xdslcmd info --show");
          }
          
          for(int i=0;i<li.size();i++){
@@ -464,7 +464,7 @@ public class HuaweiRouter extends Router {
       if((needs==null)
         ||needs.contains("graphBits")
         ){
-         li=sendRequest("xdslcmd info --Bits");
+         li=sendMeasureRequest("xdslcmd info --Bits");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);            
             if(s.indexOf("Tone number      Bit Allocation")==0){
@@ -490,7 +490,7 @@ public class HuaweiRouter extends Router {
       if((needs==null)
         ||needs.contains("graphSNR")
         ){
-         li=sendRequest("xdslcmd info --SNR");
+         li=sendMeasureRequest("xdslcmd info --SNR");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Tone number      SNR")==0){
@@ -516,7 +516,7 @@ public class HuaweiRouter extends Router {
       if((needs==null)
         ||needs.contains("graphQLN")
         ){
-         li=sendRequest("xdslcmd info --QLN");
+         li=sendMeasureRequest("xdslcmd info --QLN");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Tone number      QLN")==0){
@@ -542,7 +542,7 @@ public class HuaweiRouter extends Router {
       if((needs==null)
         ||needs.contains("graphHlog")
         ){
-         li=sendRequest("xdslcmd info --Hlog");
+         li=sendMeasureRequest("xdslcmd info --Hlog");
          for(int i=0;i<li.size();i++){
             String s=li.get(i);
             if(s.indexOf("Tone number      Hlog")==0){
@@ -568,7 +568,7 @@ public class HuaweiRouter extends Router {
       if((needs==null)
         ||needs.contains("SWVersion")
         ){
-         li=sendRequest("xdslcmd --version");
+         li=sendMeasureRequest("xdslcmd --version");
          if(li.size()>=2){
             ret.SWVersion=Utils.getStringBetween(":", null, li.get(1));
          }
@@ -577,7 +577,7 @@ public class HuaweiRouter extends Router {
       if((needs==null)
         ||needs.contains("upTime")
         ){
-         li=sendRequest("cat /proc/uptime");
+         li=sendMeasureRequest("cat /proc/uptime");
          if(li.size()>=1){
                ret.upTime=Utils.formatSeconds(Utils.getColumns(li.get(0)).get(0));
          }
@@ -586,7 +586,7 @@ public class HuaweiRouter extends Router {
       if((needs==null)
         ||needs.contains("wanIP")
         ){
-         li=sendRequest("ip addr show label \"ppp*\"");
+         li=sendMeasureRequest("ip addr show label \"ppp*\"");
          for(int i=0;i<li.size();i++){
             String s=li.get(i).trim();
             if(s.startsWith("inet ")){

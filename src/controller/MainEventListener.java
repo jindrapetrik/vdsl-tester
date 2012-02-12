@@ -2,6 +2,7 @@ package controller;
 
 import eve.sys.Event;
 import eve.sys.EventListener;
+import eve.ui.Application;
 import eve.ui.MenuItem;
 import eve.ui.event.ControlEvent;
 import eve.ui.event.MenuEvent;
@@ -72,6 +73,13 @@ public class MainEventListener implements EventListener,MyListener{
 
       if(event.equals("finalupdateFinish")){
          status.setDisplayed(false);
+      }
+      
+      if(event.equals("terminating")){
+         Main.terminating();
+      }
+      if(event.equals("terminated")){
+         
       }
       
    }

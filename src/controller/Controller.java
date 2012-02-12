@@ -10,6 +10,6 @@ public class Controller {
 
    public Controller()
    {
-      Arbiter.listen(new String[]{"connectingStart","exception","loggingInStart","doMeasureStart","finalupdateStart","finalupdateFinish"}, mainEventListener);
+      Arbiter.listen(new String[]{"connectingStart","exception","loggingInStart","doMeasureStart","finalupdateStart","finalupdateFinish","terminated","terminating"}, mainEventListener);
    }
 }
