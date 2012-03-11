@@ -6,7 +6,10 @@ import eve.ui.Application;
 import eve.ui.MenuItem;
 import eve.ui.event.ControlEvent;
 import eve.ui.event.MenuEvent;
+import eve.ui.event.PenEvent;
 import model.Main;
+import view.GraphFrame;
+import view.GraphPanel;
 import view.StatusDisplay;
 
 /**
@@ -26,6 +29,16 @@ public class MainEventListener implements EventListener,MyListener{
       if (event.type == MenuEvent.SELECTED) {
             MenuEvent mev = (MenuEvent) event;
             action=((MenuItem)mev.selectedItem).action;
+      }
+      
+      if(event.type==PenEvent.PEN_MOVE){
+         if(event.target instanceof GraphPanel)
+         {
+               GraphPanel graph=(GraphPanel)event.target;
+               PenEvent pe=(PenEvent)event;
+               GraphFrame graphFrame=(GraphFrame)graph.getParent();
+               graphFrame.setDisplay(pe.x,pe.y);
+         }
       }
 
 

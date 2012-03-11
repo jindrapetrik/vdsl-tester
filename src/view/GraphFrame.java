@@ -7,8 +7,10 @@ import eve.fx.Image;
 import eve.ui.Frame;
 import eve.ui.ImageControl;
 import eve.ui.Label;
+import eve.ui.Panel;
 import java.util.List;
 import model.Band;
+import model.Main;
 
 /**
  *
@@ -26,7 +28,7 @@ public class GraphFrame extends Frame {
 
 
    GraphPanel graphPanel;
-
+   
 
    final int FRAMEHEIGHT=425;
    final int FRAMEWIDTH=725;
@@ -58,6 +60,13 @@ public class GraphFrame extends Frame {
       addLast(carrierRuler,Frame.LEFT,Frame.TOP);
    }
 
+   public void setDisplay(int displayX,int displayY)
+   {
+      
+      //displayLabel.setText(Main.view.language.carrier+":"+displayCarrier+" "+Main.view.language.frequency+":"+displayFrequency+"kHz "+Main.view.language.value+":"+displayValue);
+      graphPanel.diplayPos(displayX,displayY);
+   }
+   
    public void setValues(List<Double> values,List<Band> USBandPlan,List<Band> DSBandPlan){
       graphPanel.setValues(values, USBandPlan, DSBandPlan);
       if(values!=null)

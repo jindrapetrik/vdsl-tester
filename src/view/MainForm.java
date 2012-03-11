@@ -50,13 +50,13 @@ public class MainForm extends Form{
    ValueField wanIPValue=new ValueField(160,ROW_HEIGHT);
    ValueField SWVersionValue=new ValueField(420,ROW_HEIGHT);
    ValueField upTimeValue=new ValueField(260,ROW_HEIGHT);
-   ValueField linkTimeValue=new ValueField(260,ROW_HEIGHT);
+   ValueField linkTimeValue=new ValueField(330,ROW_HEIGHT);
    ValueField reconnectValue=new ValueField(70,ROW_HEIGHT);   
 
-   ValueField USmaxRateValue=new ValueField(110,ROW_HEIGHT);
-   ValueField DSmaxRateValue=new ValueField(110,ROW_HEIGHT);
-   ValueField USactRateValue=new ValueField(110,ROW_HEIGHT);
-   ValueField DSactRateValue=new ValueField(110,ROW_HEIGHT);
+   ValueField USmaxRateValue=new ValueField(120,ROW_HEIGHT,10);
+   ValueField DSmaxRateValue=new ValueField(120,ROW_HEIGHT,10);
+   ValueField USactRateValue=new ValueField(120,ROW_HEIGHT,10);
+   ValueField DSactRateValue=new ValueField(120,ROW_HEIGHT,10);
 
    ValueField USPowerValue=new ValueField(75,ROW_HEIGHT);
    ValueField DSPowerValue=new ValueField(75,ROW_HEIGHT);
@@ -102,7 +102,7 @@ public class MainForm extends Form{
    ValueField U3SNRValue=new ValueField(75,ROW_HEIGHT);
    ValueField U3PowerValue=new ValueField(75,ROW_HEIGHT);
 
-   ValueField LinkTimeDetailValue=new ValueField(300,ROW_HEIGHT);
+   ValueField LinkTimeDetailValue=new ValueField(330,ROW_HEIGHT);
 
    ValueField USESLinkTimeValue=new ValueField(100,ROW_HEIGHT);
    ValueField USUASLinkTimeValue=new ValueField(100,ROW_HEIGHT);
@@ -115,7 +115,7 @@ public class MainForm extends Form{
    ValueField DSFECLinkTimeValue=new ValueField(100,ROW_HEIGHT);
 
 
-   ValueField LinkTime2DetailValue=new ValueField(300,ROW_HEIGHT);
+   ValueField LinkTime2DetailValue=new ValueField(330,ROW_HEIGHT);
 
    ValueField USESLinkTime2Value=new ValueField(100,ROW_HEIGHT);
    ValueField USUASLinkTime2Value=new ValueField(100,ROW_HEIGHT);
@@ -127,7 +127,7 @@ public class MainForm extends Form{
    ValueField DSCRCLinkTime2Value=new ValueField(100,ROW_HEIGHT);
    ValueField DSFECLinkTime2Value=new ValueField(100,ROW_HEIGHT);
 
-   ValueField PrevDayDetailValue=new ValueField(300,ROW_HEIGHT);
+   ValueField PrevDayDetailValue=new ValueField(330,ROW_HEIGHT);
    ValueField USESPrevDayValue=new ValueField(100,ROW_HEIGHT);
    ValueField USUASPrevDayValue=new ValueField(100,ROW_HEIGHT);
    ValueField USCRCPrevDayValue=new ValueField(100,ROW_HEIGHT);
@@ -138,7 +138,7 @@ public class MainForm extends Form{
    ValueField DSCRCPrevDayValue=new ValueField(100,ROW_HEIGHT);
    ValueField DSFECPrevDayValue=new ValueField(100,ROW_HEIGHT);
 
-   ValueField LatDayDetailValue=new ValueField(300,ROW_HEIGHT);
+   ValueField LatDayDetailValue=new ValueField(330,ROW_HEIGHT);
    ValueField USESLatDayValue=new ValueField(100,ROW_HEIGHT);
    ValueField USUASLatDayValue=new ValueField(100,ROW_HEIGHT);
    ValueField USCRCLatDayValue=new ValueField(100,ROW_HEIGHT);
@@ -149,7 +149,7 @@ public class MainForm extends Form{
    ValueField DSCRCLatDayValue=new ValueField(100,ROW_HEIGHT);
    ValueField DSFECLatDayValue=new ValueField(100,ROW_HEIGHT);
 
-   ValueField Prev15MinDetailValue=new ValueField(300,ROW_HEIGHT);
+   ValueField Prev15MinDetailValue=new ValueField(330,ROW_HEIGHT);
    ValueField USESPrev15MinValue=new ValueField(100,ROW_HEIGHT);
    ValueField USUASPrev15MinValue=new ValueField(100,ROW_HEIGHT);
    ValueField USCRCPrev15MinValue=new ValueField(100,ROW_HEIGHT);
@@ -161,7 +161,7 @@ public class MainForm extends Form{
    ValueField DSFECPrev15MinValue=new ValueField(100,ROW_HEIGHT);
 
 
-   ValueField Lat15MinDetailValue=new ValueField(300,ROW_HEIGHT);
+   ValueField Lat15MinDetailValue=new ValueField(330,ROW_HEIGHT);
    ValueField USESLat15MinValue=new ValueField(100,ROW_HEIGHT);
    ValueField USUASLat15MinValue=new ValueField(100,ROW_HEIGHT);
    ValueField USCRCLat15MinValue=new ValueField(100,ROW_HEIGHT);

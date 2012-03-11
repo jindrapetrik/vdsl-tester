@@ -80,25 +80,43 @@ public class RulerPanel extends Panel {
             grphcs.drawText(""+max, rulerWidth-lineAndSpace-(grphcs.getFontMetrics(grphcs.getFont()).getTextWidth(""+(int)max)), 0);
       }
 
-      int stepLeft=stepCount-2;
-      val=min;
-      for(int i=1;i<=stepLeft;i++)
-      {
-         val+=step;
+      
+      
+         
          if(mode==MODE_HORIZONTAL){
-            grphcs.drawLine(i*rulerWidth/(stepCount-1), 0, i*rulerWidth/(stepCount-1), lineLength);
-            grphcs.drawText(""+(int)val, i*rulerWidth/(stepCount-1)-(grphcs.getFontMetrics(grphcs.getFont()).getTextWidth(""+(int)val)/2), lineAndSpace);
+            val=min;
+            for(int i=1;val<=max-step;i++)
+            {
+               val+=step;
+               double left=val;
+               left=left*rulerWidth;            
+               left=Math.ceil(left/(max-min));
+               grphcs.drawLine((int)left, 0, (int)left, lineLength);
+               grphcs.drawText(""+(int)val, (int)left-(grphcs.getFontMetrics(grphcs.getFont()).getTextWidth(""+(int)val)/2), lineAndSpace);
+            }
          }
          if(mode==MODE_VERTICAL){
-            grphcs.drawLine(rulerWidth-lineLength,
-                    rulerHeight-i*rulerHeight/(stepCount-1)
-                    , rulerWidth,
-                    rulerHeight-i*rulerHeight/(stepCount-1)
-                    );
-            grphcs.drawText(""+(int)val, rulerWidth-lineAndSpace-(grphcs.getFontMetrics(grphcs.getFont()).getTextWidth(""+(int)val)), rulerHeight-fontHeight/2-i*rulerHeight/(stepCount-1));
+            val=0;
+            double top=0;
+            while(true)
+            {
+               val+=step;               
+               top=val;
+               top=top*rulerHeight;
+               top=Math.abs(top/delta);     
+               if(top>=rulerHeight-20){
+                  break;
+               }
+               grphcs.drawLine(rulerWidth-lineLength,
+                     (int)top
+                     , rulerWidth,
+                     (int)top
+                     );
+               String text=""+(int)(max-val);
+               grphcs.drawText(text, rulerWidth-lineAndSpace-(grphcs.getFontMetrics(grphcs.getFont()).getTextWidth(text)), (int)top-fontHeight/2);
+             }            
          }         
-      }
-   }
+      }   
 
 
    

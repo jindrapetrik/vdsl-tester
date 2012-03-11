@@ -1,13 +1,12 @@
 package view;
 
-import eve.fx.Color;
-import eve.fx.Graphics;
-import eve.fx.Image;
-import eve.fx.Rect;
+import eve.fx.*;
 import eve.ui.Panel;
+import eve.ui.event.PenEvent;
 import java.util.ArrayList;
 import java.util.List;
 import model.Band;
+import model.Main;
 
 /**
  *
@@ -20,6 +19,8 @@ public class GraphPanel extends Panel {
    double valueMin;
    List<Band> USBandPlan;
    List<Band> DSBandPlan;
+   int cursorX = -1;
+   int cursorY = -1;
 
 
    Color unusedCarrierColor=Color.DarkGray;
@@ -31,11 +32,14 @@ public class GraphPanel extends Panel {
    Color DSCarrierBackgroundColor=new Color(0xdd,0xdd,0xff);
 
    Image img;
+   GraphFrame frame;
 
    public GraphPanel(double valueMax,double valueMin)
    {
       this.valueMax=valueMax;
       this.valueMin=valueMin;
+      addListener(Main.controller.mainEventListener);
+      PenEvent.wantPenMoved(this, PenEvent.WANT_PEN_MOVED_INSIDE, true); 
    }
 
    final int CAR_NONE=0;
@@ -181,6 +185,67 @@ public class GraphPanel extends Panel {
          if(img!=null){
             grphcs.drawImage(img, 0, 0);
          }
+         if(cursorX==-1){
+            return;
+         }
+         if((cursorY<10)&&(cursorX>getWidth()-10))
+          return;         
+
+        int displayCarrier=cursorX*values.size()/getWidth();
+        if(displayCarrier<0){
+           displayCarrier=0;
+        }
+        if(displayCarrier>values.size()-1){
+           displayCarrier=values.size()-1;
+        }
+        int displayY=0;
+        int maxDelta=(int)Math.abs(valueMax-valueMin);
+        double valY=values.get(displayCarrier);
+        valY = valY - valueMin;
+        
+        displayY=getHeight()-(int)Math.round(Math.abs(valY)*getHeight()/maxDelta);
+        if(displayY==getHeight()){
+           displayY=getHeight()-1;
+        }
+         grphcs.setColor(Color.DarkGray);
+         grphcs.drawLine(cursorX, 0, cursorX, getHeight());
+         grphcs.drawLine(0, displayY, 10, displayY);
+         
+
+         
+         double displayValue=values.get(displayCarrier);
+         double displayFrequency=Main.carrierToFrequency(displayCarrier);
+         displayFrequency=Math.round(displayFrequency*100)/100;
+         grphcs.setColor(Color.White);
+         
+         int dispRectX=20;
+         int dispRectW=120;
+         int dispRectH=60;
+         int dispRectY=20;
+         if(cursorX<getWidth()/2){
+            dispRectX=getWidth()-dispRectW-20;
+         }
+         
+         grphcs.fillRect(dispRectX, dispRectY, dispRectW, dispRectH);
+         grphcs.setColor(Color.Black);
+         grphcs.drawRect(dispRectX, dispRectY, dispRectW, dispRectH);
+         
+         grphcs.setFont(new Font("Sans serif",0,14));
+         //displayLabel.setText(Main.view.language.carrier+":"+displayCarrier+" "+Main.view.language.frequency+":"+displayFrequency+"kHz "+Main.view.language.value+":"+displayValue);
+         grphcs.drawText(Main.view.language.carrier+":"+displayCarrier, dispRectX+5, dispRectY+5);
+         String displayFrequencyStr=""+displayFrequency;
+         if(displayFrequencyStr.indexOf(".0")==displayFrequencyStr.length()-2){
+            displayFrequencyStr=displayFrequencyStr.substring(0, displayFrequencyStr.length()-2);
+         }
+         
+         grphcs.drawText(Main.view.language.frequency+":"+displayFrequency+"kHz", dispRectX+5, dispRectY+5+15);
+         grphcs.drawText(Main.view.language.value+":"+displayValue, dispRectX+5, dispRectY+5+30);         
+   }
+   
+   public void diplayPos(int x,int y) {                  
+      cursorX=x;
+      cursorY=y;
+      repaint();
    }
 
 }
