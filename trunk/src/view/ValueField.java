@@ -21,7 +21,7 @@ public class ValueField extends HtmlDisplay {
    public ValueField(int width,int height,int alignCount){
       super(); 
       this.alignCount=alignCount;
-      setFont(new Font("Monospaced",0,20));
+      setFont(new Font("Courier New",0,20)); //nefunguje v Java VM
       setBorder(EDGE_SUNKEN,1);
       setFixedSize(width, height);      
    }
