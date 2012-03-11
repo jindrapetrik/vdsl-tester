@@ -184,4 +184,8 @@ public class Main {
             }
        }).start();
     }
+    
+    public static double carrierToFrequency(int carrier){
+       return ((double)carrier)/(232.0/1000.0);
+    }
 }

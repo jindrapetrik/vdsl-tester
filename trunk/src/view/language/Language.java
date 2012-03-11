@@ -113,6 +113,10 @@ public class Language {
     public String subcarrier="Subcarrier";
 
     public String mainTitle="VDSL Measuring";
+    
+    public String carrier="Carrier";    
+    public String frequency="Frequency";
+    public String value="Value";
 
     //Connect dialog
     public String parameters="Parameters of VDSL Measuring";

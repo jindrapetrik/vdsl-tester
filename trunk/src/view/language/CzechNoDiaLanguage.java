@@ -66,6 +66,9 @@ public class CzechNoDiaLanguage extends Language {
        freq="Frekv";
        subcarrier="Subnosna";
        mainTitle = "Mereni VDSL";
+       carrier="Nosna";    
+       frequency="Frekvence";
+       value="Hodnota";
 
        //Connect dialog
        parameters = "Parametry VDSL Mereni";

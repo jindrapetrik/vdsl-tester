@@ -66,6 +66,10 @@ public class CzechLanguage extends Language {
        freq="Frekv";
        subcarrier="Subnosná";
 
+       carrier="Nosná";    
+       frequency="Frekvence";
+       value="Hodnota";
+       
        mainTitle = "Mìøení VDSL";
 
        //Connect dialog
