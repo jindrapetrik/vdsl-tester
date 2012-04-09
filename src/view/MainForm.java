@@ -53,54 +53,54 @@ public class MainForm extends Form{
    ValueField linkTimeValue=new ValueField(330,ROW_HEIGHT);
    ValueField reconnectValue=new ValueField(70,ROW_HEIGHT);   
 
-   ValueField USmaxRateValue=new ValueField(120,ROW_HEIGHT,10);
-   ValueField DSmaxRateValue=new ValueField(120,ROW_HEIGHT,10);
-   ValueField USactRateValue=new ValueField(120,ROW_HEIGHT,10);
-   ValueField DSactRateValue=new ValueField(120,ROW_HEIGHT,10);
+   ValueField USmaxRateValue=new ValueField(120,ROW_HEIGHT,true);
+   ValueField DSmaxRateValue=new ValueField(120,ROW_HEIGHT,true);
+   ValueField USactRateValue=new ValueField(120,ROW_HEIGHT,true);
+   ValueField DSactRateValue=new ValueField(120,ROW_HEIGHT,true);
 
-   ValueField USPowerValue=new ValueField(75,ROW_HEIGHT);
-   ValueField DSPowerValue=new ValueField(75,ROW_HEIGHT);
-   ValueField USSNRValue=new ValueField(75,ROW_HEIGHT);
-   ValueField DSSNRValue=new ValueField(75,ROW_HEIGHT);
-   ValueField USINPValue=new ValueField(75,ROW_HEIGHT);
-   ValueField DSINPValue=new ValueField(75,ROW_HEIGHT);
-   ValueField USDelayValue=new ValueField(75,ROW_HEIGHT);
-   ValueField DSDelayValue=new ValueField(75,ROW_HEIGHT);
+   ValueField USPowerValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField DSPowerValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField USSNRValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField DSSNRValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField USINPValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField DSINPValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField USDelayValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField DSDelayValue=new ValueField(75,ROW_HEIGHT,true);
 
-   ValueField U0LatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U0SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U0SNRValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U0PowerValue=new ValueField(75,ROW_HEIGHT);
+   ValueField U0LatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U0SatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U0SNRValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U0PowerValue=new ValueField(75,ROW_HEIGHT,true);
 
-   ValueField D1LatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D1SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D1SNRValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D1PowerValue=new ValueField(75,ROW_HEIGHT);
+   ValueField D1LatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField D1SatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField D1SNRValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField D1PowerValue=new ValueField(75,ROW_HEIGHT,true);
 
-   ValueField U1LatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U1SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U1SNRValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U1PowerValue=new ValueField(75,ROW_HEIGHT);
+   ValueField U1LatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U1SatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U1SNRValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U1PowerValue=new ValueField(75,ROW_HEIGHT,true);
 
-   ValueField D2LatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D2SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D2SNRValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D2PowerValue=new ValueField(75,ROW_HEIGHT);
+   ValueField D2LatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField D2SatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField D2SNRValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField D2PowerValue=new ValueField(75,ROW_HEIGHT,true);
 
-   ValueField U2LatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U2SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U2SNRValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U2PowerValue=new ValueField(75,ROW_HEIGHT);
+   ValueField U2LatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U2SatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U2SNRValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U2PowerValue=new ValueField(75,ROW_HEIGHT,true);
 
-   ValueField D3LatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D3SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D3SNRValue=new ValueField(75,ROW_HEIGHT);
-   ValueField D3PowerValue=new ValueField(75,ROW_HEIGHT);
+   ValueField D3LatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField D3SatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField D3SNRValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField D3PowerValue=new ValueField(75,ROW_HEIGHT,true);
 
-   ValueField U3LatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U3SatnValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U3SNRValue=new ValueField(75,ROW_HEIGHT);
-   ValueField U3PowerValue=new ValueField(75,ROW_HEIGHT);
+   ValueField U3LatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U3SatnValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U3SNRValue=new ValueField(75,ROW_HEIGHT,true);
+   ValueField U3PowerValue=new ValueField(75,ROW_HEIGHT,true);
 
    ValueField LinkTimeDetailValue=new ValueField(330,ROW_HEIGHT);
 
@@ -172,13 +172,13 @@ public class MainForm extends Form{
    ValueField DSCRCLat15MinValue=new ValueField(100,ROW_HEIGHT);
    ValueField DSFECLat15MinValue=new ValueField(100,ROW_HEIGHT);
    
-   ValueField hlog72Value=new ValueField(100,ROW_HEIGHT);
-   ValueField hlog232Value=new ValueField(100,ROW_HEIGHT);
-   ValueField hlog812Value=new ValueField(100,ROW_HEIGHT);
-   ValueField hlog1275Value=new ValueField(100,ROW_HEIGHT);
-   ValueField hlog1855Value=new ValueField(100,ROW_HEIGHT);
-   ValueField hlog2899Value=new ValueField(100,ROW_HEIGHT);
-   ValueField hlog3710Value=new ValueField(100,ROW_HEIGHT);
+   ValueField hlog72Value=new ValueField(100,ROW_HEIGHT,true);
+   ValueField hlog232Value=new ValueField(100,ROW_HEIGHT,true);
+   ValueField hlog812Value=new ValueField(100,ROW_HEIGHT,true);
+   ValueField hlog1275Value=new ValueField(100,ROW_HEIGHT,true);
+   ValueField hlog1855Value=new ValueField(100,ROW_HEIGHT,true);
+   ValueField hlog2899Value=new ValueField(100,ROW_HEIGHT,true);
+   ValueField hlog3710Value=new ValueField(100,ROW_HEIGHT,true);
    
    StatusValueField statusValue=new StatusValueField(150,ROW_HEIGHT);
 
@@ -445,6 +445,7 @@ public class MainForm extends Form{
             hlog3710Value.setValue(null);
          }
       }
+      rm.fixBandPlans();
       if(cardName.equals("GRAPHBIT")){
          graphBitTab.setValues(rm.graphBits,rm.USbandPlanFinal,rm.DSbandPlanFinal);
       }

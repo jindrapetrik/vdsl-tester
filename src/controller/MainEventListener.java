@@ -64,6 +64,15 @@ public class MainEventListener implements EventListener,MyListener{
 
       //"connectingStart","exception","loggingInStart","doMeasureStart","finalupdateStart","finalupdateFinish"
 
+      if(model.Main.view==null){
+         return;
+      }
+      if(model.Main.view.mainForm==null){
+         return;
+      }
+      if(model.Main.view.mainForm.statusDisplay==null){
+         return;
+      }
       StatusDisplay status=model.Main.view.mainForm.statusDisplay;
 
       if(event.equals("connectingStart")){

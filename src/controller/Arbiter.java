@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import model.ProgramLog;
 
 /**
  *
@@ -33,6 +34,7 @@ public class Arbiter {
    }
    public static void inform(String event,Object data)
    {
+       //ProgramLog.println("<inform "+event+">");
        List<MyListener> mylisteners=listeners.get(event);
         if(mylisteners!=null)
         {

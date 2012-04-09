@@ -4,7 +4,9 @@ import controller.Arbiter;
 import controller.Controller;
 import controller.MyListener;
 import eve.io.File;
+import eve.sys.Device;
 import eve.ui.Application;
+import eve.ui.Window;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +35,7 @@ public class Main {
    public static int socketTimeout=5000;
    public static int delay=5000;
    public static String fakeFile=null;
-   public static String version="beta 5";
+   public static String version="beta 6";
 
    static{
       routers.add(new ComtrendRouter());
@@ -107,6 +109,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
        Application.startApplication(args);
        loadConfig();
+       try{
+        Window.defaultWindowIcon = Device.toDeviceIcon("ikona.gif");//new Picture(
+        }catch(Exception ex){}
+ 
        if(isDebugMode())
        {
              Arbiter.listen("exception", new MyListener() {
@@ -116,6 +122,7 @@ public class Main {
                   }
                });
        }
+      
        controller=new Controller();
        view=new View();
        view.initDisplay();       
@@ -168,6 +175,9 @@ public class Main {
                            Arbiter.inform("finalupdateFinish");
                         } catch (FinishException fex){                           
                            Arbiter.inform("measureTerminated");
+                        } catch(IOException iex){
+                           router.forceDisconnect();
+                           Arbiter.inform("exception",iex);
                         } catch (Exception ex) {
                            router.disconnect();
                            Arbiter.inform("exception",ex);

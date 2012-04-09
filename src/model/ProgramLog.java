@@ -64,7 +64,6 @@ public class ProgramLog {
     public static void println(String s){
         if(!Main.isDebugMode()) return;
         if(kontrolaSouboru()){
-            System.out.println(s);
             print(s);
             print("\r\n");
         }
