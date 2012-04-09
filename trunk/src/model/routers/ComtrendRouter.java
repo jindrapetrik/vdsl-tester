@@ -66,7 +66,7 @@ public class ComtrendRouter extends Router {
    @Override
    public RouterMeasurement doMeasure(HashSet<String> needs) throws IOException {
       RouterMeasurement ret=new RouterMeasurement();
-      if(!connect()){
+      if(!loggedIn){
          return ret;
       }
       List<String> li;

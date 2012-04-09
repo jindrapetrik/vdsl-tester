@@ -454,6 +454,10 @@ public abstract class Router {
      * Disconnects router
      */
     public void disconnect() {
+        forceDisconnect();
+    }
+    
+    public void forceDisconnect(){
         loggedIn = false;
         connected = false;
         try {
