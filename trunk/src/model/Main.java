@@ -35,7 +35,7 @@ public class Main {
    public static int socketTimeout=5000;
    public static int delay=5000;
    public static String fakeFile=null;
-   public static String version="beta 6";
+   public static String version="beta 6.1";
    public static boolean loadOnceMode=false;
 
    static{
