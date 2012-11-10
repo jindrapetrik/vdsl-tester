@@ -84,5 +84,6 @@ public class CzechLanguage extends Language {
        telnetPort = "Telnet port";
        ok = "OK";
        cancel = "Storno";
+       loadOnceMode="Jedno naètení";
     }
 }
