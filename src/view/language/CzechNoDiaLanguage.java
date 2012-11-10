@@ -82,6 +82,6 @@ public class CzechNoDiaLanguage extends Language {
        telnetPort = "Telnet port";
        ok = "OK";
        cancel = "Storno";
-
+       loadOnceMode="Jedno nacteni";
     }
 }

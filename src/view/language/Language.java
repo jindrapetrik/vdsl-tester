@@ -130,5 +130,5 @@ public class Language {
     public String telnetPort="Telnet port";
     public String ok="OK";
     public String cancel="Cancel";  
-
+    public String loadOnceMode="Load once mode";
 }

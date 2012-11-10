@@ -934,6 +934,9 @@ public class MainForm extends Form{
       addLast(new Panel());
       resizable=false;
       title=model.Main.view.language.mainTitle+' '+model.Main.version;
+      if(Main.loadOnceMode){
+         title+="("+model.Main.view.language.loadOnceMode+")";
+      }
 
    }
 

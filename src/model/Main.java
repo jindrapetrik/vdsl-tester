@@ -36,6 +36,7 @@ public class Main {
    public static int delay=5000;
    public static String fakeFile=null;
    public static String version="beta 6";
+   public static boolean loadOnceMode=false;
 
    static{
       routers.add(new ComtrendRouter());
@@ -82,6 +83,9 @@ public class Main {
                     if(s.startsWith("debugMode=1")){
                         setDebugMode(true);
                     }
+                    if(s.startsWith("loadOnce=1")){
+                        loadOnceMode=true;                        
+                    }                       
                 }
                 is.close();
             } catch (IOException ex) {
@@ -183,6 +187,9 @@ public class Main {
                            Arbiter.inform("exception",ex);
                         }
                    }
+                  if(Main.loadOnceMode){
+                     break;                     
+                  }
                   if(cardName.equals(view.getSelectedCard())){
                      Thread.sleep(delay);
                   }
